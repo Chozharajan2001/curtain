@@ -27,11 +27,23 @@ export async function postJson(url, opts = {}) {
     attempts++;
     lastCall = now();
 
-    const res = await fetchImpl(url, {
-      method: "POST",
-      headers: { "content-type": "application/json", ...headers },
-      body: JSON.stringify(body),
-    });
+    let res;
+    try {
+      res = await fetchImpl(url, {
+        method: "POST",
+        headers: { "content-type": "application/json", ...headers },
+        body: JSON.stringify(body),
+      });
+    } catch (e) {
+      if (attempts >= maxAttempts) {
+        const err = new Error(`http-fetch failed after ${attempts} attempt(s): ${e.message}`);
+        err.attempts = attempts;
+        err.cause = e;
+        throw err;
+      }
+      await sleep(backoffMs(attempts - 1));
+      continue;
+    }
 
     if (res.ok) return { json: await res.json(), status: res.status, attempts };
 

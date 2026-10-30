@@ -34,6 +34,27 @@ test("always 429: throws with status and attempt count", async () => {
   );
 });
 
+test("thrown network error is retried, then succeeds", async () => {
+  let n = 0;
+  const fetchImpl = async () => {
+    if (++n === 1) throw new TypeError("fetch failed");
+    return res(200, { ok: 1 });
+  };
+  const r = await postJson("http://x", { body: {}, fetchImpl, sleep: noSleep, now: () => 1e6 });
+  assert.equal(r.attempts, 2);
+  assert.equal(n, 2);
+});
+
+test("thrown network error exhausted: throws with attempt count", async () => {
+  const fetchImpl = async () => {
+    throw new TypeError("fetch failed");
+  };
+  await assert.rejects(
+    () => postJson("http://x", { body: {}, fetchImpl, sleep: noSleep, now: () => 1e6, maxAttempts: 3 }),
+    (e) => e.attempts === 3 && /http-fetch failed/.test(e.message)
+  );
+});
+
 test("400 is not retried", async () => {
   let n = 0;
   const fetchImpl = async () => (n++, res(400, { error: "bad" }));

@@ -22,7 +22,10 @@ export function buildPrompt(imgW, imgH) {
     "You are a privacy locator. Find every piece of personal data in the image.",
     'Return strict JSON only, no prose, no markdown: {"boxes":[{"category":"<slug>","box":{"x":0,"y":0,"w":0,"h":0},"value":"<exact text or short label>"}]}',
     `category must be exactly one of: ${CATEGORIES.join(", ")}.`,
-    `box is a rectangle on a 0-1000 grid relative to the image, top-left origin. Image size sent: ${imgW}x${imgH}.`,
+    `The image is exactly ${imgW} pixels wide and ${imgH} pixels tall.`,
+    "box x,y,w,h are PIXELS in that image. x,y is the top-left corner of the text.",
+    "Measure each box tightly around the exact characters or object edges. No padding, no whole-line boxes.",
+    "Place every box on the actual ink. Do not estimate positions by counting lines from the top.",
     'Include every face, name, phone, email, address, account or order number, payment card, government ID, handwritten note, signature and company logo you can see. If there are none, return {"boxes":[]}.',
   ].join("\n");
 }

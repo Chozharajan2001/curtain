@@ -3,11 +3,11 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { buildPrompt, parseBoxes, CATEGORIES } from "./locate.mjs";
 
-test("prompt names every category and the 0-1000 grid", () => {
+test("prompt names every category and the pixel size", () => {
   const p = buildPrompt(1280, 900);
   for (const c of CATEGORIES) assert.ok(p.includes(c), `prompt missing ${c}`);
-  assert.match(p, /0-1000/);
-  assert.match(p, /1280x900/);
+  assert.match(p, /1280 pixels wide and 900 pixels tall/);
+  assert.match(p, /PIXELS/);
   assert.match(p, /strict JSON/);
 });
 

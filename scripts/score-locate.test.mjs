@@ -6,23 +6,10 @@ import { readFileSync } from "node:fs";
 import { scoreImage } from "../src/recall.mjs";
 
 const key = JSON.parse(readFileSync("corpus/key/v1.json", "utf8"));
-const { w: W, h: H } = key.viewport;
-
-function toGrid(items) {
-  return items.map((it) => ({
-    category: it.category,
-    box: {
-      x: (it.box.x / W) * 1000,
-      y: (it.box.y / H) * 1000,
-      w: (it.box.w / W) * 1000,
-      h: (it.box.h / H) * 1000,
-    },
-  }));
-}
 
 test("harness: key against itself scores 1.0 on every image", () => {
   for (const im of key.images) {
-    const r = scoreImage(im.items, toGrid(im.items), W, H);
+    const r = scoreImage(im.items, im.items, im.width, im.height);
     assert.equal(r.recall, 1, `${im.name} self-score`);
     assert.deepEqual(r.misses, [], `${im.name} should have no misses`);
   }
@@ -31,7 +18,7 @@ test("harness: key against itself scores 1.0 on every image", () => {
 test("harness: empty run scores 0.0 and names all 22 misses", () => {
   let misses = 0;
   for (const im of key.images) {
-    const r = scoreImage(im.items, [], W, H);
+    const r = scoreImage(im.items, [], im.width, im.height);
     assert.equal(r.recall, 0, `${im.name} empty run`);
     misses += r.misses.length;
   }
