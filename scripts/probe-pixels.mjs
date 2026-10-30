@@ -6,9 +6,11 @@ import { fileURLToPath } from "node:url";
 import { postJson } from "../src/http.mjs";
 import { parseBoxes } from "../src/locate.mjs";
 import { toDataUrl } from "../src/locate.mjs";
+import { appendUsage, usageRecord } from "../src/usage.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const key = JSON.parse(readFileSync(join(root, "corpus/key/v1.json"), "utf8"));
+// Literal key path so the D7 guard in corpus.test.mjs sees this file.
+const key = JSON.parse(readFileSync("corpus/key/v1.json", "utf8"));
 
 function pixelPrompt(w, h) {
   return [
@@ -45,6 +47,10 @@ for (const name of ["ticket", "clinic"]) {
     headers: { authorization: `Bearer ${apiKey}` },
     body,
   });
+  appendUsage(
+    join(root, "usage.jsonl"),
+    usageRecord({ model, usage: r.json?.usage ?? null, tag: `probe:pixels:${name}` })
+  );
   const content = r.json?.choices?.[0]?.message?.content ?? "";
   const text = typeof content === "string" ? content : JSON.stringify(content);
   const parsed = parseBoxes(text);
