@@ -1,4 +1,4 @@
-// Locate stage: one image -> labelled boxes on the 0-1000 grid.
+// Locate stage: one image -> labelled boxes in pixel coordinates.
 // Temperature 0. Unparseable output fails closed: zero boxes + an error string.
 import { postJson } from "./http.mjs";
 
