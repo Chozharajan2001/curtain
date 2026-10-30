@@ -8,8 +8,9 @@
     "build-corpus": "node scripts/build-corpus.mjs",
     "count:planted": "node scripts/count-planted.mjs",
     "skeleton": "node scripts/skeleton.mjs",
-    "locate": "node --env-file-if-exists=.env scripts/locate.mjs && node scripts/score-locate.mjs",
-    "score": "node scripts/score-locate.mjs"
+    "locate": "node --env-file-if-exists=.env scripts/locate.mjs && node scripts/score-locate.mjs corpus/out/locate.json",
+    "score": "node scripts/score-locate.mjs",
+    "cost": "node scripts/cost.mjs"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
