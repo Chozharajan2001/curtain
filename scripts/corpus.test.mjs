@@ -48,7 +48,12 @@ function walk(dir, out = []) {
 
 test("no product import reads corpus/key", () => {
   // build-corpus.mjs writes the key; count-planted.mjs is the scorer.
-  const allowed = new Set(["scripts/build-corpus.mjs", "scripts/count-planted.mjs"]);
+  const allowed = new Set([
+    "scripts/build-corpus.mjs",
+    "scripts/count-planted.mjs",
+    "scripts/score-locate.mjs",
+    "scripts/score-locate.test.mjs",
+  ]);
   for (const f of walk("src").concat(walk("scripts"))) {
     if (allowed.has(f.replace(/\\/g, "/"))) continue;
     const code = readFileSync(f, "utf8");
