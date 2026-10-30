@@ -1,0 +1,267 @@
+[
+  {
+    "name": "bank",
+    "w": 1046,
+    "h": 455,
+    "boxes": [
+      {
+        "category": "name",
+        "value": "Karthik Iyer",
+        "box": {
+          "x": 142,
+          "y": 129,
+          "w": 110,
+          "h": 22
+        }
+      },
+      {
+        "category": "account",
+        "value": "50200099887711",
+        "box": {
+          "x": 155,
+          "y": 181,
+          "w": 175,
+          "h": 22
+        }
+      },
+      {
+        "category": "card",
+        "value": "5500 0000 0000 0004",
+        "box": {
+          "x": 172,
+          "y": 247,
+          "w": 215,
+          "h": 22
+        }
+      },
+      {
+        "category": "address",
+        "value": "14 Anna Salai, Chennai 600002",
+        "box": {
+          "x": 143,
+          "y": 331,
+          "w": 268,
+          "h": 22
+        }
+      }
+    ],
+    "dropped": 0,
+    "error": null
+  },
+  {
+    "name": "clinic",
+    "w": 1046,
+    "h": 478,
+    "boxes": [
+      {
+        "category": "name",
+        "value": "Divya Nair",
+        "box": {
+          "x": 173,
+          "y": 131,
+          "w": 109,
+          "h": 21
+        }
+      },
+      {
+        "category": "phone",
+        "value": "+91 99400 55667",
+        "box": {
+          "x": 142,
+          "y": 183,
+          "w": 162,
+          "h": 20
+        }
+      },
+      {
+        "category": "govt",
+        "value": "AXPPI4821K",
+        "box": {
+          "x": 156,
+          "y": 235,
+          "w": 132,
+          "h": 20
+        }
+      },
+      {
+        "category": "note",
+        "value": "patient reports mild fever since Tuesday",
+        "box": {
+          "x": 124,
+          "y": 287,
+          "w": 335,
+          "h": 21
+        }
+      },
+      {
+        "category": "sig",
+        "value": "Dr. S. Menon",
+        "box": {
+          "x": 73,
+          "y": 343,
+          "w": 182,
+          "h": 34
+        }
+      }
+    ],
+    "dropped": 0,
+    "error": null
+  },
+  {
+    "name": "order",
+    "w": 1046,
+    "h": 354,
+    "boxes": [
+      {
+        "category": "name",
+        "value": "Priya Das",
+        "box": {
+          "x": 145,
+          "y": 134,
+          "w": 92,
+          "h": 22
+        }
+      },
+      {
+        "category": "order",
+        "value": "ORD-10293",
+        "box": {
+          "x": 132,
+          "y": 189,
+          "w": 104,
+          "h": 22
+        }
+      },
+      {
+        "category": "address",
+        "value": "22 MG Road, Bengaluru 560001",
+        "box": {
+          "x": 322,
+          "y": 189,
+          "w": 292,
+          "h": 22
+        }
+      },
+      {
+        "category": "phone",
+        "value": "+91 98840 11223",
+        "box": {
+          "x": 158,
+          "y": 243,
+          "w": 148,
+          "h": 22
+        }
+      },
+      {
+        "category": "email",
+        "value": "priya.d@example.com",
+        "box": {
+          "x": 320,
+          "y": 243,
+          "w": 205,
+          "h": 22
+        }
+      }
+    ],
+    "dropped": 0,
+    "error": null
+  },
+  {
+    "name": "photo",
+    "w": 1046,
+    "h": 522,
+    "boxes": [
+      {
+        "category": "face",
+        "value": "cartoon face",
+        "box": {
+          "x": 74,
+          "y": 127,
+          "w": 163,
+          "h": 197
+        }
+      },
+      {
+        "category": "name",
+        "value": "Ravi Kumar",
+        "box": {
+          "x": 74,
+          "y": 359,
+          "w": 126,
+          "h": 20
+        }
+      },
+      {
+        "category": "logo",
+        "value": "ACME Corp",
+        "box": {
+          "x": 156,
+          "y": 412,
+          "w": 128,
+          "h": 22
+        }
+      }
+    ],
+    "dropped": 0,
+    "error": null
+  },
+  {
+    "name": "ticket",
+    "w": 1046,
+    "h": 406,
+    "boxes": [
+      {
+        "category": "name",
+        "value": "Asha Rao",
+        "box": {
+          "x": 132,
+          "y": 137,
+          "w": 88,
+          "h": 20
+        }
+      },
+      {
+        "category": "email",
+        "value": "asha.rao@example.in",
+        "box": {
+          "x": 235,
+          "y": 137,
+          "w": 190,
+          "h": 20
+        }
+      },
+      {
+        "category": "phone",
+        "value": "+91 98410 22334",
+        "box": {
+          "x": 143,
+          "y": 191,
+          "w": 148,
+          "h": 21
+        }
+      },
+      {
+        "category": "order",
+        "value": "ORD-88412",
+        "box": {
+          "x": 138,
+          "y": 244,
+          "w": 108,
+          "h": 21
+        }
+      },
+      {
+        "category": "card",
+        "value": "4111 1111 1111 1234",
+        "box": {
+          "x": 153,
+          "y": 298,
+          "w": 187,
+          "h": 21
+        }
+      }
+    ],
+    "dropped": 0,
+    "error": null
+  }
+]

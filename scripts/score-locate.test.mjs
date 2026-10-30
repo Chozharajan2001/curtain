@@ -24,3 +24,22 @@ test("harness: empty run scores 0.0 and names all 22 misses", () => {
   }
   assert.equal(misses, 22);
 });
+
+test("pinned run2 scores 0.864 coverage / 0.500 strict with zero API calls", () => {
+  const runs = JSON.parse(readFileSync("runs/locate-2026-10-30-run2.json", "utf8"));
+  const byName = new Map(runs.map((r) => [r.name, r]));
+  let hits = 0;
+  let strict = 0;
+  let planted = 0;
+  for (const im of key.images) {
+    const run = byName.get(im.name);
+    assert.ok(run, `${im.name} must be in the pinned run`);
+    const s = scoreImage(im.items, run.boxes, run.w, run.h);
+    hits += s.hits;
+    strict += s.strictHits;
+    planted += s.planted;
+  }
+  assert.equal(hits, 19);
+  assert.equal(strict, 11);
+  assert.equal(planted, 22);
+});

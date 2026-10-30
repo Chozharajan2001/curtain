@@ -1,10 +1,12 @@
-// Locate scorer — the only module that reads the answer key (D7).
-// Prints recall per image, every miss by name, then the overall number.
+// Locate scorer — reads the key plus one PINNED run file (D7).
+// Usage: node scripts/score-locate.mjs [runs/<file>.json]
+// Zero API calls. The pinned file is committed; corpus/out/ is not.
 import { readFileSync } from "node:fs";
 import { scoreImage } from "../src/recall.mjs";
 
 const key = JSON.parse(readFileSync("corpus/key/v1.json", "utf8"));
-const runs = JSON.parse(readFileSync("corpus/out/locate.json", "utf8"));
+const runFile = process.argv[2] || "runs/locate-2026-10-30-run2.json";
+const runs = JSON.parse(readFileSync(runFile, "utf8"));
 const byName = new Map(runs.map((r) => [r.name, r]));
 
 let planted = 0;
