@@ -13,8 +13,14 @@ function walkTests(dir, out = []) {
   }
   for (const n of names) {
     const p = join(dir, n);
-    if (n === "node_modules" || n === ".git") continue;
-    if (statSync(p).isDirectory()) walkTests(p, out);
+    if (n === "node_modules" || n === ".git" || n === "dist" || n === ".next" || n === "coverage") continue;
+    let isDir = false;
+    try {
+      isDir = statSync(p).isDirectory();
+    } catch {
+      continue;
+    }
+    if (isDir) walkTests(p, out);
     else if (n.endsWith(".test.mjs")) out.push(p);
   }
   return out;
