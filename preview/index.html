@@ -14,14 +14,26 @@ img{width:100%;border:1px solid #999}
 <h1>Curtain — walking skeleton (static preview, no server)</h1>
 <div class="row" id="r"></div>
 <script>
-fetch("../corpus/out/skeleton.json").then(r=>r.json()).then(items=>{
-  const d=document.getElementById("r");
-  for(const it of items){
-    const c=document.createElement("div");c.className="card";
-    c.innerHTML=`<span class="badge ${it.verdict}">${it.verdict.toUpperCase()}</span> <b>${it.name}</b><br><img src="../img/${it.name}.png" alt="${it.name}"><br>leaks: ${it.leaks.join("; ")||"(none)"}`;
-    d.appendChild(c);
-  }
-});
+// Results inlined by scripts/skeleton.mjs. No fetch: works from file://
+// and in a fresh clone. Images resolve to ../corpus/img/ from preview/.
+const items = [{"name":"ticket","verdict":"refused","leaks":["FAKE-LEAK-1"]},{"name":"clinic","verdict":"refused","leaks":["FAKE-LEAK-1"]},{"name":"bank","verdict":"refused","leaks":["FAKE-LEAK-1"]},{"name":"order","verdict":"refused","leaks":["FAKE-LEAK-1"]},{"name":"photo","verdict":"released","leaks":[]}];
+const d = document.getElementById("r");
+for (const it of items) {
+  const c = document.createElement("div");
+  c.className = "card";
+  const badge = document.createElement("span");
+  badge.className = "badge " + it.verdict;
+  badge.textContent = it.verdict.toUpperCase();
+  const title = document.createElement("b");
+  title.textContent = " " + it.name;
+  const img = document.createElement("img");
+  img.src = "../corpus/img/" + it.name + ".png";
+  img.alt = it.name;
+  const leaks = document.createElement("div");
+  leaks.textContent = "leaks: " + (it.leaks.join("; ") || "(none)");
+  c.append(badge, title, document.createElement("br"), img, document.createElement("br"), leaks);
+  d.appendChild(c);
+}
 </script>
 </body>
 </html>

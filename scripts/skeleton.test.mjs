@@ -1,7 +1,7 @@
 // S3 preview: static HTML reading corpus/out/skeleton.json. No server.
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync, rmSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { gridToPixels, sendScale, MAX_SEND_WIDTH } from "../src/coords.mjs";
 import { decide } from "../src/decide.mjs";
@@ -37,8 +37,14 @@ test("decide is fail-closed", () => {
 });
 
 test("skeleton output exists after run", () => {
-  spawnSync(process.execPath, ["scripts/skeleton.mjs"], { encoding: "utf8" });
+  rmSync("corpus/out/skeleton.json", { force: true });
+  const r0 = spawnSync(process.execPath, ["scripts/skeleton.mjs"], {
+    encoding: "utf8",
+  });
+  assert.equal(r0.status, 0);
   assert.ok(existsSync("corpus/out/skeleton.json"));
   const r = JSON.parse(readFileSync("corpus/out/skeleton.json", "utf8"));
   assert.equal(r.length, 5);
+  assert.equal(r.filter((x) => x.verdict === "refused").length, 4);
+  assert.equal(r.filter((x) => x.verdict === "released").length, 1);
 });

@@ -3,7 +3,9 @@
 // item. Fake attack: reads the uncovered item. S4/S5/S7 replace each fake.
 // Usage: node scripts/skeleton.mjs [image-name]
 // Prints: <name>: verdict=<released|refused> leaks=[...]
-import { writeFileSync, mkdirSync } from "node:fs";
+// Also rewrites preview/index.html with the results inlined, so the preview
+// works from file:// and in a fresh clone (no fetch, no server, no out/ file).
+import { writeFileSync, mkdirSync, readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { gridToPixels } from "../src/coords.mjs";
@@ -40,3 +42,13 @@ for (const name of names) {
   results.push({ name, verdict, leaks });
 }
 writeFileSync(join(outDir, "skeleton.json"), JSON.stringify(results, null, 2));
+
+// Inline the full 5-image results into the preview so it renders from
+// file:// with zero network. Single-image runs skip the rewrite.
+if (!process.argv[2]) {
+  const tpl = readFileSync(join(root, "preview", "template.html"), "utf8");
+  writeFileSync(
+    join(root, "preview", "index.html"),
+    tpl.replace("/*__RESULTS__*/", JSON.stringify(results))
+  );
+}
