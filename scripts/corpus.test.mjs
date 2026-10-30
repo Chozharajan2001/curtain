@@ -22,9 +22,9 @@ test("key values are scorable: valid kind, sentinel shape, no dup literal", () =
         `${im.name}: bad valueKind on ${it.category}`
       );
       if (it.valueKind === "sentinel") {
-        assert.match(it.value, /^SENTINEL:/, `${im.name}: bad sentinel`);
+        assert.match(it.value, /^SENTINEL:\S+$/, `${im.name}: bad sentinel`);
       } else {
-        assert.ok(it.value.length > 0, `${im.name}: empty literal`);
+        assert.ok(it.value.trim().length > 0, `${im.name}: empty literal`);
         assert.ok(!seen.has(it.value), `${im.name}: dup literal ${it.value}`);
         seen.add(it.value);
       }
