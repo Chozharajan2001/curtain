@@ -6,7 +6,8 @@
   "scripts": {
     "verify": "node scripts/verify.mjs",
     "build-corpus": "node scripts/build-corpus.mjs",
-    "count:planted": "node scripts/count-planted.mjs"
+    "count:planted": "node scripts/count-planted.mjs",
+    "skeleton": "node scripts/skeleton.mjs"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
