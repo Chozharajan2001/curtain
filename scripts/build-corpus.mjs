@@ -70,7 +70,7 @@ const artefacts = [
   {
     name: "photo",
     title: "Team photo",
-    body: `<div class="face" data-pii="face" data-face-name="Ravi Kumar"><div class="eye l"></div><div class="eye r"></div><div class="mouth"></div></div>
+    body: `<div class="face" data-pii="face" data-face-id="SENTINEL:face-01"><div class="eye l"></div><div class="eye r"></div><div class="mouth"></div></div>
 <p><span data-pii="name">Ravi Kumar</span> (left) at the offsite.</p>
 <p>Logo: <span data-pii="logo">ACME Corp</span></p>`,
   },
@@ -85,9 +85,11 @@ for (const a of artefacts) {
   const items = await pg.$$eval("[data-pii]", (els) =>
     els.map((el) => {
       const r = el.getBoundingClientRect();
+      const faceId = el.getAttribute("data-face-id");
       return {
         category: el.getAttribute("data-pii"),
-        value: (el.getAttribute("data-face-name") || el.innerText).trim(),
+        value: faceId ? faceId : el.innerText.trim(),
+        valueKind: faceId ? "sentinel" : "literal",
         box: {
           x: Math.round(r.x),
           y: Math.round(r.y),

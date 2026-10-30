@@ -1,21 +1,26 @@
 // Prints "<n> checks" using TAP output: "# pass N".
 // Fail-closed: zero test files, zero passes, or any failing test → exit 1.
 import { spawnSync } from "node:child_process";
-import { readdirSync } from "node:fs";
+import { readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 
-const files = [];
-for (const dir of ["src", "scripts"]) {
+function walkTests(dir, out = []) {
   let names = [];
   try {
     names = readdirSync(dir);
   } catch {
-    continue;
+    return out;
   }
   for (const n of names) {
-    if (n.endsWith(".test.mjs")) files.push(join(dir, n));
+    const p = join(dir, n);
+    if (n === "node_modules" || n === ".git") continue;
+    if (statSync(p).isDirectory()) walkTests(p, out);
+    else if (n.endsWith(".test.mjs")) out.push(p);
   }
+  return out;
 }
+
+const files = [...walkTests("src"), ...walkTests("scripts")];
 
 if (files.length === 0) {
   console.log("0 checks");
