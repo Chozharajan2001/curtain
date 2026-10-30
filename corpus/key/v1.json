@@ -110,8 +110,8 @@
           "value": "Dr. S. Menon",
           "box": {
             "x": 73,
-            "y": 324,
-            "w": 900,
+            "y": 310,
+            "w": 192,
             "h": 51
           }
         }
@@ -225,7 +225,7 @@
       "items": [
         {
           "category": "face",
-          "value": "",
+          "value": "Ravi Kumar",
           "box": {
             "x": 73,
             "y": 125,

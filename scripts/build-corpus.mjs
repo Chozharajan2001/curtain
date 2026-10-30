@@ -20,8 +20,11 @@ body{font-family:Arial,sans-serif;background:#fff;color:#111;margin:0;padding:40
 .card{border:1px solid #ccc;padding:32px;max-width:900px}
 h1{font-size:28px;margin:0 0 16px} p,li{font-size:18px;line-height:1.6}
 table{border-collapse:collapse;font-size:18px} td{border:1px solid #999;padding:8px 16px}
-.face{width:160px;height:200px;background:#f2c99b;border-radius:80px 80px 40px 40px;margin:20px 0}
-.sig{font-family:cursive;font-size:32px;color:#224}
+.face{position:relative;width:160px;height:200px;background:#f2c99b;border-radius:80px 80px 40px 40px;margin:20px 0;overflow:hidden}
+.face .eye{position:absolute;top:70px;width:22px;height:28px;background:#222;border-radius:50%}
+.face .eye.l{left:38px}.face .eye.r{right:38px}
+.face .mouth{position:absolute;bottom:40px;left:50px;width:60px;height:12px;background:#7a3b2e;border-radius:0 0 30px 30px}
+.sig{display:inline-block;font-family:cursive;font-size:32px;color:#224}
 `;
 
 // Each item: id, category, value, and the CSS rect of its <span data-pii>.
@@ -46,7 +49,7 @@ const artefacts = [
 <p>Phone: <span data-pii="phone">+91 99400 55667</span></p>
 <p>Govt ID: <span data-pii="govt">AXPPI4821K</span></p>
 <p>Note: <span data-pii="note">patient reports mild fever since Tuesday</span></p>
-<p class="sig" data-pii="sig">Dr. S. Menon</p>`,
+<p><span class="sig" data-pii="sig">Dr. S. Menon</span></p>`,
   },
   {
     name: "bank",
@@ -67,7 +70,7 @@ const artefacts = [
   {
     name: "photo",
     title: "Team photo",
-    body: `<div class="face" data-pii="face"></div>
+    body: `<div class="face" data-pii="face" data-face-name="Ravi Kumar"><div class="eye l"></div><div class="eye r"></div><div class="mouth"></div></div>
 <p><span data-pii="name">Ravi Kumar</span> (left) at the offsite.</p>
 <p>Logo: <span data-pii="logo">ACME Corp</span></p>`,
   },
@@ -84,7 +87,7 @@ for (const a of artefacts) {
       const r = el.getBoundingClientRect();
       return {
         category: el.getAttribute("data-pii"),
-        value: el.innerText.trim(),
+        value: (el.getAttribute("data-face-name") || el.innerText).trim(),
         box: {
           x: Math.round(r.x),
           y: Math.round(r.y),
