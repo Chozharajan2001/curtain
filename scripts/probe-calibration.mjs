@@ -7,6 +7,7 @@ import { writeFileSync, mkdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { locate, toDataUrl } from "../src/locate.mjs";
+import { appendUsage, usageRecord } from "../src/usage.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const outDir = join(root, "corpus", "out");
@@ -59,6 +60,14 @@ const r = await locate({
 writeFileSync(
   join(outDir, "probe-raw.json"),
   JSON.stringify({ truth, boxes: r.boxes, raw: r.raw, usage: r.usage, error: r.error }, null, 2)
+);
+appendUsage(
+  join(root, "usage.jsonl"),
+  usageRecord({
+    model: process.env.META_MODEL || "muse-spark-1.3",
+    usage: r.usage,
+    tag: "probe:calibration",
+  })
 );
 
 console.log("truth:", JSON.stringify(truth));
