@@ -21,6 +21,27 @@ test("gridToPixels maps 0-1000 grid to pixels", () => {
   });
 });
 
+test("gridToPixels clamps to the image", () => {
+  assert.deepEqual(gridToPixels({ x: 990, y: 990, w: 100, h: 100 }, 1280, 900), {
+    x: 1267,
+    y: 891,
+    w: 13,
+    h: 9,
+  });
+  assert.deepEqual(gridToPixels({ x: -50, y: -20, w: 100, h: 100 }, 1280, 900), {
+    x: 0,
+    y: 0,
+    w: 128,
+    h: 90,
+  });
+  assert.deepEqual(gridToPixels({ x: 100, y: 100, w: 0, h: 0 }, 1280, 900), {
+    x: 128,
+    y: 90,
+    w: 0,
+    h: 0,
+  });
+});
+
 test("sendScale caps at 1600px wide", () => {
   assert.equal(MAX_SEND_WIDTH, 1600);
   assert.equal(sendScale(1280), 1);
