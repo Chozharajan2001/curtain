@@ -47,13 +47,15 @@ function walk(dir, out = []) {
 }
 
 test("no product import reads corpus/key", () => {
-  // build-corpus.mjs writes the key; count-planted.mjs and score-locate.mjs
-  // score against it; overlay.mjs draws it for a human. None is product code.
+  // build-corpus.mjs writes the key; count-planted.mjs, score-locate.mjs and
+  // compare-runs.mjs score against it; overlay.mjs draws it for a human.
+  // None is product code.
   const allowed = new Set([
     "scripts/build-corpus.mjs",
     "scripts/count-planted.mjs",
     "scripts/score-locate.mjs",
     "scripts/score-locate.test.mjs",
+    "scripts/compare-runs.mjs",
     "scripts/overlay.mjs",
     "scripts/probe-pixels.mjs",
   ]);
