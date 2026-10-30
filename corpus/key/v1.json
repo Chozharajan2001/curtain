@@ -1,0 +1,281 @@
+{
+  "version": 1,
+  "viewport": {
+    "w": 1280,
+    "h": 900
+  },
+  "images": [
+    {
+      "name": "ticket",
+      "file": "corpus/img/ticket.png",
+      "items": [
+        {
+          "category": "name",
+          "value": "Asha Rao",
+          "valueKind": "literal",
+          "box": {
+            "x": 124,
+            "y": 127,
+            "w": 79,
+            "h": 20
+          }
+        },
+        {
+          "category": "email",
+          "value": "asha.rao@example.in",
+          "valueKind": "literal",
+          "box": {
+            "x": 219,
+            "y": 127,
+            "w": 175,
+            "h": 20
+          }
+        },
+        {
+          "category": "phone",
+          "value": "+91 98410 22334",
+          "valueKind": "literal",
+          "box": {
+            "x": 135,
+            "y": 174,
+            "w": 141,
+            "h": 20
+          }
+        },
+        {
+          "category": "order",
+          "value": "ORD-88412",
+          "valueKind": "literal",
+          "box": {
+            "x": 129,
+            "y": 221,
+            "w": 96,
+            "h": 20
+          }
+        },
+        {
+          "category": "card",
+          "value": "4111 1111 1111 1234",
+          "valueKind": "literal",
+          "box": {
+            "x": 142,
+            "y": 267,
+            "w": 165,
+            "h": 20
+          }
+        }
+      ]
+    },
+    {
+      "name": "clinic",
+      "file": "corpus/img/clinic.png",
+      "items": [
+        {
+          "category": "name",
+          "value": "Divya Nair",
+          "valueKind": "literal",
+          "box": {
+            "x": 139,
+            "y": 127,
+            "w": 82,
+            "h": 20
+          }
+        },
+        {
+          "category": "phone",
+          "value": "+91 99400 55667",
+          "valueKind": "literal",
+          "box": {
+            "x": 135,
+            "y": 174,
+            "w": 141,
+            "h": 20
+          }
+        },
+        {
+          "category": "govt",
+          "value": "AXPPI4821K",
+          "valueKind": "literal",
+          "box": {
+            "x": 143,
+            "y": 221,
+            "w": 105,
+            "h": 20
+          }
+        },
+        {
+          "category": "note",
+          "value": "patient reports mild fever since Tuesday",
+          "valueKind": "literal",
+          "box": {
+            "x": 121,
+            "y": 267,
+            "w": 318,
+            "h": 20
+          }
+        },
+        {
+          "category": "sig",
+          "value": "Dr. S. Menon",
+          "valueKind": "literal",
+          "box": {
+            "x": 73,
+            "y": 310,
+            "w": 192,
+            "h": 51
+          }
+        }
+      ]
+    },
+    {
+      "name": "bank",
+      "file": "corpus/img/bank.png",
+      "items": [
+        {
+          "category": "name",
+          "value": "Karthik Iyer",
+          "valueKind": "literal",
+          "box": {
+            "x": 136,
+            "y": 127,
+            "w": 91,
+            "h": 20
+          }
+        },
+        {
+          "category": "account",
+          "value": "50200099887711",
+          "valueKind": "literal",
+          "box": {
+            "x": 148,
+            "y": 174,
+            "w": 139,
+            "h": 20
+          }
+        },
+        {
+          "category": "card",
+          "value": "5500 0000 0000 0004",
+          "valueKind": "literal",
+          "box": {
+            "x": 213,
+            "y": 264,
+            "w": 175,
+            "h": 20
+          }
+        },
+        {
+          "category": "address",
+          "value": "14 Anna Salai, Chennai 600002",
+          "valueKind": "literal",
+          "box": {
+            "x": 140,
+            "y": 316,
+            "w": 253,
+            "h": 20
+          }
+        }
+      ]
+    },
+    {
+      "name": "order",
+      "file": "corpus/img/order.png",
+      "items": [
+        {
+          "category": "name",
+          "value": "Priya Das",
+          "valueKind": "literal",
+          "box": {
+            "x": 137,
+            "y": 127,
+            "w": 78,
+            "h": 20
+          }
+        },
+        {
+          "category": "order",
+          "value": "ORD-10293",
+          "valueKind": "literal",
+          "box": {
+            "x": 124,
+            "y": 174,
+            "w": 96,
+            "h": 20
+          }
+        },
+        {
+          "category": "address",
+          "value": "22 MG Road, Bengaluru 560001",
+          "valueKind": "literal",
+          "box": {
+            "x": 292,
+            "y": 174,
+            "w": 259,
+            "h": 20
+          }
+        },
+        {
+          "category": "phone",
+          "value": "+91 98840 11223",
+          "valueKind": "literal",
+          "box": {
+            "x": 145,
+            "y": 221,
+            "w": 139,
+            "h": 20
+          }
+        },
+        {
+          "category": "email",
+          "value": "priya.d@example.com",
+          "valueKind": "literal",
+          "box": {
+            "x": 294,
+            "y": 221,
+            "w": 179,
+            "h": 20
+          }
+        }
+      ]
+    },
+    {
+      "name": "photo",
+      "file": "corpus/img/photo.png",
+      "items": [
+        {
+          "category": "face",
+          "value": "SENTINEL:face-01",
+          "valueKind": "sentinel",
+          "box": {
+            "x": 73,
+            "y": 125,
+            "w": 160,
+            "h": 200
+          }
+        },
+        {
+          "category": "name",
+          "value": "Ravi Kumar",
+          "valueKind": "literal",
+          "box": {
+            "x": 73,
+            "y": 349,
+            "w": 94,
+            "h": 20
+          }
+        },
+        {
+          "category": "logo",
+          "value": "ACME Corp",
+          "valueKind": "literal",
+          "box": {
+            "x": 122,
+            "y": 396,
+            "w": 96,
+            "h": 20
+          }
+        }
+      ]
+    }
+  ]
+}
