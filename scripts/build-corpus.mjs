@@ -1,6 +1,8 @@
 // S2 corpus builder. Draws 5 fake artefacts as HTML, screenshots to PNG,
 // writes corpus/key/v1.json with every planted item + its true pixel box.
-// Boxes: planted with known CSS rects at fixed 1280x900 viewport → box math is exact.
+// The viewport is cropped to the content: dead white space made the planted
+// text ~2% of the image height and the model's boxes drifted off the text
+// (proved by scripts/probe-calibration.mjs + scripts/overlay.mjs).
 import { chromium } from "playwright";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
@@ -13,13 +15,13 @@ mkdirSync(imgDir, { recursive: true });
 mkdirSync(keyDir, { recursive: true });
 
 const W = 1280;
-const H = 900;
+const PAD = 40;
 
 const css = `
-body{font-family:Arial,sans-serif;background:#fff;color:#111;margin:0;padding:40px}
+body{font-family:Arial,sans-serif;background:#fff;color:#111;margin:0;padding:${PAD}px}
 .card{border:1px solid #ccc;padding:32px;max-width:900px}
-h1{font-size:28px;margin:0 0 16px} p,li{font-size:18px;line-height:1.6}
-table{border-collapse:collapse;font-size:18px} td{border:1px solid #999;padding:8px 16px}
+h1{font-size:28px;margin:0 0 16px} p,li{font-size:20px;line-height:1.6}
+table{border-collapse:collapse;font-size:20px} td{border:1px solid #999;padding:8px 16px}
 .face{position:relative;width:160px;height:200px;background:#f2c99b;border-radius:80px 80px 40px 40px;margin:20px 0;overflow:hidden}
 .face .eye{position:absolute;top:70px;width:22px;height:28px;background:#222;border-radius:50%}
 .face .eye.l{left:38px}.face .eye.r{right:38px}
@@ -76,21 +78,74 @@ const artefacts = [
   },
 ];
 
-const key = { version: 1, viewport: { w: W, h: H }, images: [] };
+const key = { version: 3, images: [] };
 const browser = await chromium.launch();
-const pg = await browser.newPage({ viewport: { width: W, height: H } });
+const pg = await browser.newPage({ viewport: { width: W, height: 900 } });
+
+// Ink boxes: a vision model targets the visible glyphs, but a CSS span rect is
+// the line box (taller than the ink). Score against what a model can see.
+async function inkBoxes(items, dataUrl, width, height) {
+  return pg.evaluate(
+    async ({ rects, dataUrl, width, height }) => {
+      const img = new Image();
+      img.src = dataUrl;
+      await img.decode();
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0);
+      const d = ctx.getImageData(0, 0, width, height).data;
+      const out = [];
+      for (const r of rects) {
+        const x0 = Math.max(0, Math.floor(r.x));
+        const y0 = Math.max(0, Math.floor(r.y - 6));
+        const x1 = Math.min(width, Math.ceil(r.x + r.w));
+        const y1 = Math.min(height, Math.ceil(r.y + r.h + 6));
+        let minX = x1;
+        let minY = y1;
+        let maxX = -1;
+        let maxY = -1;
+        for (let y = y0; y < y1; y++) {
+          for (let x = x0; x < x1; x++) {
+            const i = (y * width + x) * 4;
+            if (d[i] < 250 || d[i + 1] < 250 || d[i + 2] < 250) {
+              if (x < minX) minX = x;
+              if (x > maxX) maxX = x;
+              if (y < minY) minY = y;
+              if (y > maxY) maxY = y;
+            }
+          }
+        }
+        out.push(maxX < 0 ? null : { x: minX, y: minY, w: maxX - minX + 1, h: maxY - minY + 1 });
+      }
+      return out;
+    },
+    { rects: items.map((i) => i.cssBox), dataUrl, width, height }
+  );
+}
 
 for (const a of artefacts) {
   await pg.setContent(page(a.title, a.body));
-  const items = await pg.$$eval("[data-pii]", (els) =>
+  // Measure the content, then crop the viewport to it (plus the body padding).
+  const card = await pg.$eval(".card", (el) => {
+    const r = el.getBoundingClientRect();
+    return { right: r.right, bottom: r.bottom };
+  });
+  const cropW = Math.ceil(card.right + PAD);
+  const cropH = Math.ceil(card.bottom + PAD);
+  await pg.setViewportSize({ width: cropW, height: cropH });
+  await pg.setContent(page(a.title, a.body));
+
+  const rects = await pg.$$eval("[data-pii]", (els) =>
     els.map((el) => {
       const r = el.getBoundingClientRect();
-      const faceId = el.getAttribute("data-face-id");
       return {
         category: el.getAttribute("data-pii"),
-        value: faceId ? faceId : el.innerText.trim(),
-        valueKind: faceId ? "sentinel" : "literal",
-        box: {
+        value: el.innerText.trim(),
+        valueKind: el.getAttribute("data-face-id") ? "sentinel" : "literal",
+        faceId: el.getAttribute("data-face-id"),
+        cssBox: {
           x: Math.round(r.x),
           y: Math.round(r.y),
           w: Math.round(r.width),
@@ -99,14 +154,32 @@ for (const a of artefacts) {
       };
     })
   );
+  const png = await pg.screenshot();
+  const dataUrl = `data:image/png;base64,${png.toString("base64")}`;
+  const ink = await inkBoxes(rects, dataUrl, cropW, cropH);
+
+  const items = rects.map((it, i) => ({
+    category: it.category,
+    value: it.faceId ? it.faceId : it.value,
+    valueKind: it.valueKind,
+    box: ink[i] ?? it.cssBox,
+    cssBox: it.cssBox,
+  }));
+
   await pg.screenshot({ path: join(imgDir, `${a.name}.png`) });
-  key.images.push({ name: a.name, file: `corpus/img/${a.name}.png`, items });
+  key.images.push({
+    name: a.name,
+    file: `corpus/img/${a.name}.png`,
+    width: cropW,
+    height: cropH,
+    items,
+  });
 }
 await browser.close();
 writeFileSync(join(keyDir, "v1.json"), JSON.stringify(key, null, 2));
 
 const total = key.images.reduce((n, im) => n + im.items.length, 0);
 for (const im of key.images) {
-  console.log(`${im.name}: ${im.items.length} items`);
+  console.log(`${im.name}: ${im.items.length} items, ${im.width}x${im.height}`);
 }
 console.log(`total planted: ${total}`);

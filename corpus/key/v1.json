@@ -1,23 +1,27 @@
 {
-  "version": 1,
-  "viewport": {
-    "w": 1280,
-    "h": 900
-  },
+  "version": 3,
   "images": [
     {
       "name": "ticket",
       "file": "corpus/img/ticket.png",
+      "width": 1046,
+      "height": 406,
       "items": [
         {
           "category": "name",
           "value": "Asha Rao",
           "valueKind": "literal",
           "box": {
-            "x": 124,
-            "y": 127,
-            "w": 79,
-            "h": 20
+            "x": 130,
+            "y": 133,
+            "w": 88,
+            "h": 15
+          },
+          "cssBox": {
+            "x": 130,
+            "y": 130,
+            "w": 88,
+            "h": 22
           }
         },
         {
@@ -25,10 +29,16 @@
           "value": "asha.rao@example.in",
           "valueKind": "literal",
           "box": {
-            "x": 219,
-            "y": 127,
-            "w": 175,
-            "h": 20
+            "x": 235,
+            "y": 133,
+            "w": 194,
+            "h": 19
+          },
+          "cssBox": {
+            "x": 235,
+            "y": 130,
+            "w": 195,
+            "h": 22
           }
         },
         {
@@ -36,10 +46,16 @@
           "value": "+91 98410 22334",
           "valueKind": "literal",
           "box": {
-            "x": 135,
-            "y": 174,
-            "w": 141,
-            "h": 20
+            "x": 142,
+            "y": 185,
+            "w": 156,
+            "h": 15
+          },
+          "cssBox": {
+            "x": 142,
+            "y": 182,
+            "w": 156,
+            "h": 22
           }
         },
         {
@@ -47,10 +63,16 @@
           "value": "ORD-88412",
           "valueKind": "literal",
           "box": {
-            "x": 129,
-            "y": 221,
-            "w": 96,
-            "h": 20
+            "x": 136,
+            "y": 237,
+            "w": 106,
+            "h": 15
+          },
+          "cssBox": {
+            "x": 135,
+            "y": 234,
+            "w": 107,
+            "h": 22
           }
         },
         {
@@ -58,10 +80,16 @@
           "value": "4111 1111 1111 1234",
           "valueKind": "literal",
           "box": {
-            "x": 142,
-            "y": 267,
-            "w": 165,
-            "h": 20
+            "x": 150,
+            "y": 289,
+            "w": 182,
+            "h": 15
+          },
+          "cssBox": {
+            "x": 150,
+            "y": 286,
+            "w": 183,
+            "h": 22
           }
         }
       ]
@@ -69,16 +97,24 @@
     {
       "name": "clinic",
       "file": "corpus/img/clinic.png",
+      "width": 1046,
+      "height": 478,
       "items": [
         {
           "category": "name",
           "value": "Divya Nair",
           "valueKind": "literal",
           "box": {
-            "x": 139,
-            "y": 127,
-            "w": 82,
-            "h": 20
+            "x": 147,
+            "y": 133,
+            "w": 90,
+            "h": 19
+          },
+          "cssBox": {
+            "x": 146,
+            "y": 130,
+            "w": 91,
+            "h": 22
           }
         },
         {
@@ -86,10 +122,16 @@
           "value": "+91 99400 55667",
           "valueKind": "literal",
           "box": {
-            "x": 135,
-            "y": 174,
-            "w": 141,
-            "h": 20
+            "x": 142,
+            "y": 185,
+            "w": 156,
+            "h": 15
+          },
+          "cssBox": {
+            "x": 142,
+            "y": 182,
+            "w": 156,
+            "h": 22
           }
         },
         {
@@ -97,10 +139,16 @@
           "value": "AXPPI4821K",
           "valueKind": "literal",
           "box": {
-            "x": 143,
-            "y": 221,
-            "w": 105,
-            "h": 20
+            "x": 151,
+            "y": 237,
+            "w": 117,
+            "h": 15
+          },
+          "cssBox": {
+            "x": 151,
+            "y": 234,
+            "w": 117,
+            "h": 22
           }
         },
         {
@@ -108,10 +156,16 @@
           "value": "patient reports mild fever since Tuesday",
           "valueKind": "literal",
           "box": {
-            "x": 121,
-            "y": 267,
-            "w": 318,
-            "h": 20
+            "x": 127,
+            "y": 289,
+            "w": 353,
+            "h": 19
+          },
+          "cssBox": {
+            "x": 126,
+            "y": 286,
+            "w": 354,
+            "h": 22
           }
         },
         {
@@ -119,8 +173,14 @@
           "value": "Dr. S. Menon",
           "valueKind": "literal",
           "box": {
+            "x": 75,
+            "y": 347,
+            "w": 189,
+            "h": 26
+          },
+          "cssBox": {
             "x": 73,
-            "y": 310,
+            "y": 333,
             "w": 192,
             "h": 51
           }
@@ -130,16 +190,24 @@
     {
       "name": "bank",
       "file": "corpus/img/bank.png",
+      "width": 1046,
+      "height": 455,
       "items": [
         {
           "category": "name",
           "value": "Karthik Iyer",
           "valueKind": "literal",
           "box": {
-            "x": 136,
-            "y": 127,
-            "w": 91,
-            "h": 20
+            "x": 144,
+            "y": 133,
+            "w": 100,
+            "h": 19
+          },
+          "cssBox": {
+            "x": 143,
+            "y": 130,
+            "w": 101,
+            "h": 22
           }
         },
         {
@@ -147,10 +215,16 @@
           "value": "50200099887711",
           "valueKind": "literal",
           "box": {
-            "x": 148,
-            "y": 174,
-            "w": 139,
-            "h": 20
+            "x": 157,
+            "y": 185,
+            "w": 151,
+            "h": 15
+          },
+          "cssBox": {
+            "x": 156,
+            "y": 182,
+            "w": 154,
+            "h": 22
           }
         },
         {
@@ -158,10 +232,16 @@
           "value": "5500 0000 0000 0004",
           "valueKind": "literal",
           "box": {
-            "x": 213,
-            "y": 264,
-            "w": 175,
-            "h": 20
+            "x": 223,
+            "y": 281,
+            "w": 194,
+            "h": 15
+          },
+          "cssBox": {
+            "x": 223,
+            "y": 278,
+            "w": 195,
+            "h": 22
           }
         },
         {
@@ -169,10 +249,16 @@
           "value": "14 Anna Salai, Chennai 600002",
           "valueKind": "literal",
           "box": {
-            "x": 140,
-            "y": 316,
-            "w": 253,
-            "h": 20
+            "x": 149,
+            "y": 338,
+            "w": 279,
+            "h": 18
+          },
+          "cssBox": {
+            "x": 147,
+            "y": 335,
+            "w": 281,
+            "h": 22
           }
         }
       ]
@@ -180,16 +266,24 @@
     {
       "name": "order",
       "file": "corpus/img/order.png",
+      "width": 1046,
+      "height": 354,
       "items": [
         {
           "category": "name",
           "value": "Priya Das",
           "valueKind": "literal",
           "box": {
-            "x": 137,
-            "y": 127,
-            "w": 78,
-            "h": 20
+            "x": 145,
+            "y": 133,
+            "w": 86,
+            "h": 19
+          },
+          "cssBox": {
+            "x": 144,
+            "y": 130,
+            "w": 87,
+            "h": 22
           }
         },
         {
@@ -197,10 +291,16 @@
           "value": "ORD-10293",
           "valueKind": "literal",
           "box": {
-            "x": 124,
-            "y": 174,
-            "w": 96,
-            "h": 20
+            "x": 130,
+            "y": 185,
+            "w": 106,
+            "h": 15
+          },
+          "cssBox": {
+            "x": 130,
+            "y": 182,
+            "w": 107,
+            "h": 22
           }
         },
         {
@@ -208,10 +308,16 @@
           "value": "22 MG Road, Bengaluru 560001",
           "valueKind": "literal",
           "box": {
-            "x": 292,
-            "y": 174,
-            "w": 259,
-            "h": 20
+            "x": 316,
+            "y": 185,
+            "w": 286,
+            "h": 19
+          },
+          "cssBox": {
+            "x": 316,
+            "y": 182,
+            "w": 288,
+            "h": 22
           }
         },
         {
@@ -219,10 +325,16 @@
           "value": "+91 98840 11223",
           "valueKind": "literal",
           "box": {
-            "x": 145,
-            "y": 221,
-            "w": 139,
-            "h": 20
+            "x": 153,
+            "y": 237,
+            "w": 155,
+            "h": 15
+          },
+          "cssBox": {
+            "x": 153,
+            "y": 234,
+            "w": 155,
+            "h": 22
           }
         },
         {
@@ -230,10 +342,16 @@
           "value": "priya.d@example.com",
           "valueKind": "literal",
           "box": {
-            "x": 294,
-            "y": 221,
-            "w": 179,
-            "h": 20
+            "x": 320,
+            "y": 237,
+            "w": 198,
+            "h": 19
+          },
+          "cssBox": {
+            "x": 319,
+            "y": 234,
+            "w": 199,
+            "h": 22
           }
         }
       ]
@@ -241,12 +359,20 @@
     {
       "name": "photo",
       "file": "corpus/img/photo.png",
+      "width": 1046,
+      "height": 522,
       "items": [
         {
           "category": "face",
           "value": "SENTINEL:face-01",
           "valueKind": "sentinel",
           "box": {
+            "x": 73,
+            "y": 125,
+            "w": 160,
+            "h": 200
+          },
+          "cssBox": {
             "x": 73,
             "y": 125,
             "w": 160,
@@ -258,10 +384,16 @@
           "value": "Ravi Kumar",
           "valueKind": "literal",
           "box": {
+            "x": 74,
+            "y": 353,
+            "w": 103,
+            "h": 15
+          },
+          "cssBox": {
             "x": 73,
-            "y": 349,
-            "w": 94,
-            "h": 20
+            "y": 350,
+            "w": 104,
+            "h": 22
           }
         },
         {
@@ -269,10 +401,16 @@
           "value": "ACME Corp",
           "valueKind": "literal",
           "box": {
-            "x": 122,
-            "y": 396,
-            "w": 96,
-            "h": 20
+            "x": 128,
+            "y": 405,
+            "w": 106,
+            "h": 19
+          },
+          "cssBox": {
+            "x": 128,
+            "y": 402,
+            "w": 107,
+            "h": 22
           }
         }
       ]

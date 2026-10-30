@@ -7,7 +7,8 @@
     "verify": "node scripts/verify.mjs",
     "build-corpus": "node scripts/build-corpus.mjs",
     "count:planted": "node scripts/count-planted.mjs",
-    "skeleton": "node scripts/skeleton.mjs"
+    "skeleton": "node scripts/skeleton.mjs",
+    "locate": "node --env-file-if-exists=.env scripts/locate.mjs && node scripts/score-locate.mjs"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
