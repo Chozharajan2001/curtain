@@ -26,8 +26,9 @@ if (files.length > 0) {
   });
   process.stdout.write(r.stdout);
   process.stderr.write(r.stderr);
-  const m = r.stdout.match(/# pass (\d+)/);
-  pass = m ? Number(m[1]) : 0;
+  const out = r.stdout + r.stderr;
+  const m = out.match(/# pass (\d+)/);
+  pass = m ? Number(m[1]) : (out.match(/✔/g) || []).length;
   code = r.status ?? 1;
 }
 console.log(`${pass} checks`);
