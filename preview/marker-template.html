@@ -49,7 +49,7 @@ function render() {
   out.textContent = JSON.stringify({ name: sel.value, items: boxes[sel.value] || [] }, null, 2);
 }
 function load() {
-  img.src = "../img/" + sel.value;
+  img.src = "img/" + sel.value;
   img.onload = render;
 }
 img.addEventListener("mousedown", e => {

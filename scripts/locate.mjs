@@ -9,7 +9,7 @@ import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 import { locate, toDataUrl } from "../src/locate.mjs";
 import { appendUsage, usageRecord } from "../src/usage.mjs";
-import { MAX_SEND_WIDTH, sendScale } from "../src/coords.mjs";
+import { MAX_SEND_WIDTH } from "../src/coords.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const apiKey = process.env.META_API_KEY;
@@ -43,18 +43,16 @@ for (const name of names) {
   let bytes = raw;
   let w = meta.width;
   let h = meta.height;
+  // rotate() applies EXIF orientation; dropping metadata afterwards strips
+  // GPS + device model (R4/R8). No withMetadata call: sharp writes none by default.
   if (w > MAX_SEND_WIDTH) {
-    const f = sendScale(w);
-    bytes = await sharp(raw).rotate().resize({ width: MAX_SEND_WIDTH }).withMetadata({ exif: {}, icc: {} }).png().toBuffer();
-    // Note: rotate() applies EXIF orientation then we strip metadata.
+    bytes = await sharp(raw).rotate().resize({ width: MAX_SEND_WIDTH }).png().toBuffer();
     const m2 = await sharp(bytes).metadata();
     w = m2.width;
     h = m2.height;
-    void f;
   } else {
-    // Normalise: strip metadata, keep pixels identical.
     const fmt = meta.format === "jpeg" ? "jpeg" : "png";
-    bytes = await sharp(raw).rotate().toFormat(fmt).withMetadata({}).toBuffer();
+    bytes = await sharp(raw).rotate().toFormat(fmt).toBuffer();
   }
   const t0 = Date.now();
   try {
