@@ -1,7 +1,9 @@
 // Blur probe: deterministic light-blur baseline for the S7 demo.
-// Blurs ticket.png at sigma 2, attacks it, pins the reply. All calls logged.
+// Blurs ticket.png at sigma 2, attacks it. NEVER overwrites the pinned
+// runs/attack-blur2-refusal.json — new runs go to corpus/out/ (gitignored).
+// Refusal wording varies run to run; the pinned copy is the original.
 // Usage: node scripts/blur-probe.mjs
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
@@ -28,13 +30,15 @@ const r = await attack({
   model,
 });
 appendUsage(join(root, "usage.jsonl"), usageRecord({ model, usage: r.usage, tag: "attack:blur-probe" }));
+const stamp = new Date().toISOString().slice(0, 10);
 writeFileSync(
-  join(root, "runs/attack-blur2-refusal.json"),
+  join(root, `corpus/out/attack-blur2-${stamp}.json`),
   JSON.stringify(
-    { date: new Date().toISOString().slice(0, 10), image: "ticket blur sigma 2", text: r.text, error: r.error },
+    { date: stamp, image: "ticket blur sigma 2", text: r.text, error: r.error },
     null,
     2
   )
 );
+console.log(`wrote corpus/out/attack-blur2-${stamp}.json (pinned runs/ copy untouched)`);
 console.log(`chars=${r.text.length} error=${r.error ?? "none"}`);
 console.log(r.text.slice(0, 200));
