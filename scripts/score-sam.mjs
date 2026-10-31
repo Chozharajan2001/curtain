@@ -40,11 +40,16 @@ for (const r of runs) {
     continue;
   }
   if (!r.box) {
-    if (r.refused) {
-      console.log(`${r.name}/${r.kind}: refused (empty response — correct, no object)`);
+    const env = r.envelope ?? {};
+    const proven =
+      r.refused === true &&
+      env.outputLen > 0 &&
+      (env.contentTypes ?? []).includes("output_text");
+    if (proven) {
+      console.log(`${r.name}/${r.kind}: refused (envelope-proven, no object)`);
       refused++;
     } else {
-      console.log(`${r.name}/${r.kind}: NO BOX — miss (error=${r.error ?? "none"})`);
+      console.log(`${r.name}/${r.kind}: UNPROVEN refusal — miss (error=${r.error ?? "none"})`);
     }
     continue;
   }
