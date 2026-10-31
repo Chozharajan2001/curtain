@@ -6,7 +6,7 @@ import { scoreImage } from "../src/recall.mjs";
 
 const manifest = checkManifest();
 if (!manifest.ok) {
-  console.error(`compare-runs: refusing to score — ${manifest.reason}`);
+  console.error(`compare-runs: refusing to score ï¿½ ${manifest.reason}`);
   process.exit(2);
 }
 
@@ -41,6 +41,7 @@ for (const im of key.images) {
   }
 }
 console.log(`every-run: ${(every / planted).toFixed(3)} (${every}/${planted})`);
+if (planted === 0) { console.log("compare: unverified â€” zero planted items"); process.exit(1); }
 console.log(`either-run: ${(either / planted).toFixed(3)} (${either}/${planted})`);
 console.log("never covered:");
 for (const n of never) console.log(`  ${n}`);

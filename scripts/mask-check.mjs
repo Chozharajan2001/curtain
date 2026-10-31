@@ -10,7 +10,7 @@ import { maskedVariance, expandBox, MARGIN } from "../src/mask.mjs";
 
 const manifest = checkManifest();
 if (!manifest.ok) {
-  console.error(`mask-check: refusing to score — ${manifest.reason}`);
+  console.error(`mask-check: refusing to score ï¿½ ${manifest.reason}`);
   process.exit(2);
 }
 
@@ -72,4 +72,5 @@ for (const im of key.images) {
 console.log(`mask: ${pass}/${key.images.length} images pass`);
 console.log(`ink area: ${((inkArea / imgArea) * 100).toFixed(2)}% of pixels`);
 console.log(`masked area: ${((maskedArea / imgArea) * 100).toFixed(2)}% of pixels`);
+if (key.images.reduce((n, im) => n + im.items.filter((it) => it.valueKind === "literal").length, 0) === 0) { console.log("mask: unverified â€” zero planted items, refusing to score"); process.exit(1); }
 process.exit(pass === key.images.length ? 0 : 1);

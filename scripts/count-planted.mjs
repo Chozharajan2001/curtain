@@ -4,7 +4,7 @@ import { checkManifest } from "../src/manifest.mjs";
 
 const manifest = checkManifest();
 if (!manifest.ok) {
-  console.error(`count-planted: refusing to score — ${manifest.reason}`);
+  console.error(`count-planted: refusing to score ï¿½ ${manifest.reason}`);
   process.exit(2);
 }
 
@@ -14,4 +14,5 @@ for (const im of key.images) {
   console.log(`${im.name}: ${im.items.length} items`);
   total += im.items.length;
 }
+if (total === 0) { console.log("count: unverified â€” zero planted items"); process.exit(1); }
 console.log(`total planted: ${total}`);

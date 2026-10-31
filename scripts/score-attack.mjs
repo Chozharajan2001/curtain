@@ -24,6 +24,13 @@ try {
 }
 const byName = new Map(key.images.map((im) => [im.name, im]));
 
+// Empty key = empty run: proves nothing, never "released". Fail closed (S8).
+const planted = key.images.reduce((n, im) => n + im.items.length, 0);
+if (planted === 0) {
+  console.log("attack: unverified — key has zero planted items, refusing to score");
+  process.exit(1);
+}
+
 let totalLeaks = 0;
 for (const r of runs) {
   const im = byName.get(r.name);
