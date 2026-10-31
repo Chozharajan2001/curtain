@@ -20,7 +20,13 @@
     "h": 522,
     "error": null,
     "raw": "",
-    "refused": true
+    "refused": true,
+    "envelope": {
+      "outputLen": 1,
+      "contentTypes": [
+        "output_text"
+      ]
+    }
   },
   {
     "name": "ticket",
@@ -30,7 +36,13 @@
     "h": 406,
     "error": null,
     "raw": "",
-    "refused": true
+    "refused": true,
+    "envelope": {
+      "outputLen": 1,
+      "contentTypes": [
+        "output_text"
+      ]
+    }
   },
   {
     "name": "bank",
@@ -40,7 +52,13 @@
     "h": 455,
     "error": null,
     "raw": "",
-    "refused": true
+    "refused": true,
+    "envelope": {
+      "outputLen": 1,
+      "contentTypes": [
+        "output_text"
+      ]
+    }
   },
   {
     "name": "clinic",
@@ -50,6 +68,12 @@
     "h": 478,
     "error": null,
     "raw": "",
-    "refused": true
+    "refused": true,
+    "envelope": {
+      "outputLen": 1,
+      "contentTypes": [
+        "output_text"
+      ]
+    }
   }
 ]

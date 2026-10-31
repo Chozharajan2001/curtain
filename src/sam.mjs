@@ -44,7 +44,15 @@ export async function samLocate({ dataUrl, concept, apiKey, baseUrl, fetchImpl, 
     now,
     maxAttempts,
   });
-  const text = r.json?.output?.[0]?.content?.[0]?.text ?? "";
+  const out0 = r.json?.output?.[0];
+  const content = out0?.content ?? [];
+  const text = content[0]?.text ?? "";
   const parsed = parseSamBox(typeof text === "string" ? text : "");
-  return { ...parsed, usage: r.json?.usage ?? null, raw: text, status: r.status };
+  // Envelope proof: an empty text with a real message envelope behind it is a
+  // genuine "nothing found". A missing envelope means the reader path is wrong.
+  const envelope = {
+    outputLen: Array.isArray(r.json?.output) ? r.json.output.length : 0,
+    contentTypes: content.map((c) => c.type),
+  };
+  return { ...parsed, usage: r.json?.usage ?? null, raw: text, envelope, status: r.status };
 }

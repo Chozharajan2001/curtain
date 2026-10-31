@@ -16,7 +16,8 @@ try {
 const byName = new Map();
 for (const im of key.images) for (const it of im.items) byName.set(`${im.name}:${it.category}`, it);
 
-let correct = 0;
+let placed = 0;
+let refused = 0;
 for (const r of runs) {
   // Map concept kind back to planted category.
   const cat = { face: "face", logo: "logo", card: "card", sig: "sig" }[r.kind];
@@ -35,13 +36,13 @@ for (const r of runs) {
     const cy = r.box.y + r.box.h / 2;
     const inside = cx >= it.box.x && cx <= it.box.x + it.box.w && cy >= it.box.y && cy <= it.box.y + it.box.h;
     console.log(`${r.name}/face: centre (${Math.round(cx)},${Math.round(cy)}) ${inside ? "INSIDE" : "OUTSIDE"} ${JSON.stringify(it.box)}`);
-    if (inside) correct++;
+    if (inside) placed++;
     continue;
   }
   if (!r.box) {
     if (r.refused) {
       console.log(`${r.name}/${r.kind}: refused (empty response — correct, no object)`);
-      correct++;
+      refused++;
     } else {
       console.log(`${r.name}/${r.kind}: NO BOX — miss (error=${r.error ?? "none"})`);
     }
@@ -51,7 +52,7 @@ for (const r of runs) {
   const cy = r.box.y + r.box.h / 2;
   const inside = cx >= it.box.x && cx <= it.box.x + it.box.w && cy >= it.box.y && cy <= it.box.y + it.box.h;
   console.log(`${r.name}/${r.kind}: centre (${Math.round(cx)},${Math.round(cy)}) ${inside ? "INSIDE" : "OUTSIDE"} ${JSON.stringify(it.box)}`);
-  if (inside) correct++;
+  if (inside) placed++;
 }
-console.log(`sam placement: ${correct}/${runs.length} correct`);
-process.exit(correct >= 4 ? 0 : 1);
+console.log(`sam placement: ${placed}/1 placed, ${refused}/4 refused`);
+process.exit(placed >= 1 && refused === 4 ? 0 : 1);
