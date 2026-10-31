@@ -15,7 +15,8 @@
     "mask:check": "node scripts/mask-check.mjs",
     "mask:sam": "node --env-file-if-exists=.env scripts/mask-sam.mjs && node scripts/score-sam.mjs corpus/out/sam.json",
     "attack": "node --env-file-if-exists=.env scripts/attack.mjs && node scripts/score-attack.mjs corpus/out/attack.json",
-    "blur-probe": "node --env-file-if-exists=.env scripts/blur-probe.mjs"
+    "blur-probe": "node --env-file-if-exists=.env scripts/blur-probe.mjs",
+    "verify:corpus": "node scripts/verify-corpus.mjs"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
