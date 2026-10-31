@@ -5,11 +5,15 @@ import assert from "node:assert/strict";
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 
-test("key lists 22 planted items across 5 images", () => {
+test("key v1 frozen: 22 planted items across 5 synthetic images", () => {
+  // v1 never changes — pinned runs reproduce against it. S12 sets live elsewhere.
   const key = JSON.parse(readFileSync("corpus/key/v1.json", "utf8"));
   assert.equal(key.images.length, 5);
   const total = key.images.reduce((n, im) => n + im.items.length, 0);
   assert.equal(total, 22);
+  for (const im of key.images) {
+    assert.ok(!im.source || im.source === "synthetic", `${im.name}: v1 is synthetic-only`);
+  }
 });
 
 test("key values are scorable: valid kind, sentinel shape, no dup literal", () => {
