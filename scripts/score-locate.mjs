@@ -2,7 +2,14 @@
 // Usage: node scripts/score-locate.mjs [runs/<file>.json]
 // Zero API calls. The pinned file is committed; corpus/out/ is not.
 import { readFileSync } from "node:fs";
+import { checkManifest } from "../src/manifest.mjs";
 import { scoreImage } from "../src/recall.mjs";
+
+const manifest = checkManifest();
+if (!manifest.ok) {
+  console.error(`score-locate: refusing to score — ${manifest.reason}`);
+  process.exit(2);
+}
 
 const key = JSON.parse(readFileSync("corpus/key/v1.json", "utf8"));
 const runFile = process.argv[2] || "runs/locate-2026-10-30-run2.json";

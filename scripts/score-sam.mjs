@@ -2,6 +2,13 @@
 // Metric: SAM box centre inside the planted region = correct placement.
 // Usage: npm run mask:sam (runs live) or node scripts/score-sam.mjs [file].
 import { readFileSync } from "node:fs";
+import { checkManifest } from "../src/manifest.mjs";
+
+const manifest = checkManifest();
+if (!manifest.ok) {
+  console.error(`score-sam: refusing to score — ${manifest.reason}`);
+  process.exit(2);
+}
 
 const key = JSON.parse(readFileSync("corpus/key/v1.json", "utf8"));
 const runFile = process.argv[2] || "corpus/out/sam.json";

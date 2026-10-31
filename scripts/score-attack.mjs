@@ -1,9 +1,17 @@
 // S7 scorer — the only module that matches attacker text against the key (D7).
 // Any planted literal in the reply = leak, named. Usage:
 //   npm run attack (live + score) or node scripts/score-attack.mjs [file].
+// Refuses to score on a tampered key (S8, D9).
 import { readFileSync } from "node:fs";
 import { findLeaks } from "../src/leaks.mjs";
 import { decide } from "../src/decide.mjs";
+import { checkManifest } from "../src/manifest.mjs";
+
+const manifest = checkManifest();
+if (!manifest.ok) {
+  console.error(`score-attack: refusing to score — ${manifest.reason}`);
+  process.exit(2);
+}
 
 const key = JSON.parse(readFileSync("corpus/key/v1.json", "utf8"));
 const runFile = process.argv[2] || "corpus/out/attack.json";
@@ -15,6 +23,13 @@ try {
   process.exit(1);
 }
 const byName = new Map(key.images.map((im) => [im.name, im]));
+
+// Empty key = empty run: proves nothing, never "released". Fail closed (S8).
+const planted = key.images.reduce((n, im) => n + im.items.length, 0);
+if (planted === 0) {
+  console.log("attack: unverified — key has zero planted items, refusing to score");
+  process.exit(1);
+}
 
 let totalLeaks = 0;
 for (const r of runs) {

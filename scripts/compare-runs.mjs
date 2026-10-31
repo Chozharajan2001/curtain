@@ -1,7 +1,14 @@
 // Stability over pinned locate runs. Zero API calls.
 // Usage: node scripts/compare-runs.mjs [runA] [runB]
 import { readFileSync } from "node:fs";
+import { checkManifest } from "../src/manifest.mjs";
 import { scoreImage } from "../src/recall.mjs";
+
+const manifest = checkManifest();
+if (!manifest.ok) {
+  console.error(`compare-runs: refusing to score � ${manifest.reason}`);
+  process.exit(2);
+}
 
 const key = JSON.parse(readFileSync("corpus/key/v1.json", "utf8"));
 const a = JSON.parse(
@@ -34,6 +41,7 @@ for (const im of key.images) {
   }
 }
 console.log(`every-run: ${(every / planted).toFixed(3)} (${every}/${planted})`);
+if (planted === 0) { console.log("compare: unverified — zero planted items"); process.exit(1); }
 console.log(`either-run: ${(either / planted).toFixed(3)} (${either}/${planted})`);
 console.log("never covered:");
 for (const n of never) console.log(`  ${n}`);
