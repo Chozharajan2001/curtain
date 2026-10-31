@@ -1,0 +1,79 @@
+[
+  {
+    "name": "photo",
+    "kind": "face",
+    "box": {
+      "x": 73,
+      "y": 126,
+      "w": 159,
+      "h": 197
+    },
+    "w": 1046,
+    "h": 522,
+    "error": null
+  },
+  {
+    "name": "photo",
+    "kind": "logo",
+    "box": null,
+    "w": 1046,
+    "h": 522,
+    "error": null,
+    "raw": "",
+    "refused": true,
+    "envelope": {
+      "outputLen": 1,
+      "contentTypes": [
+        "output_text"
+      ]
+    }
+  },
+  {
+    "name": "ticket",
+    "kind": "card",
+    "box": null,
+    "w": 1046,
+    "h": 406,
+    "error": null,
+    "raw": "",
+    "refused": true,
+    "envelope": {
+      "outputLen": 1,
+      "contentTypes": [
+        "output_text"
+      ]
+    }
+  },
+  {
+    "name": "bank",
+    "kind": "card",
+    "box": null,
+    "w": 1046,
+    "h": 455,
+    "error": null,
+    "raw": "",
+    "refused": true,
+    "envelope": {
+      "outputLen": 1,
+      "contentTypes": [
+        "output_text"
+      ]
+    }
+  },
+  {
+    "name": "clinic",
+    "kind": "sig",
+    "box": null,
+    "w": 1046,
+    "h": 478,
+    "error": null,
+    "raw": "",
+    "refused": true,
+    "envelope": {
+      "outputLen": 1,
+      "contentTypes": [
+        "output_text"
+      ]
+    }
+  }
+]

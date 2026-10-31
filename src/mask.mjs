@@ -23,8 +23,11 @@ export async function maskImage(input, boxes, margin = MARGIN) {
   const meta = await base.metadata();
   const imgW = meta.width;
   const imgH = meta.height;
-  const fills = boxes.map((b) => {
-    const e = expandBox(b, imgW, imgH, margin);
+  // Each entry is a box or {box, margin}. SAM-tight boxes carry margin 4.
+  const fills = boxes.map((entry) => {
+    const b = entry.box ? entry.box : entry;
+    const m = entry.box ? (entry.margin ?? margin) : margin;
+    const e = expandBox(b, imgW, imgH, m);
     return {
       input: {
         create: { width: e.w, height: e.h, channels: 3, background: FILL },
