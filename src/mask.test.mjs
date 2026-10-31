@@ -27,12 +27,15 @@ test("expandBox grows by margin and clamps to image", () => {
 });
 
 test("maskImage paints every box solid and strips metadata", async () => {
-  // White 100x100 with a black EXIF tag smuggled in.
+  // White 100x100 with a fake card number smuggled into real EXIF.
   const input = await sharp({
     create: { width: 100, height: 100, channels: 3, background: { r: 255, g: 255, b: 255 } },
   })
     .png()
+    .withExif({ IFD0: { Copyright: "4111 1111 1111 1234" } })
     .toBuffer();
+  const inMeta = await sharp(input).metadata();
+  assert.ok(inMeta.exif, "test setup: input must carry EXIF");
   const out = await maskImage(input, [{ x: 10, y: 10, w: 30, h: 20 }], 5);
   const { data, info } = await sharp(out).raw().toBuffer({ resolveWithObject: true });
   // Inside the expanded box (5,5,40,30): every pixel must be pure black.

@@ -33,8 +33,13 @@ export async function maskImage(input, boxes, margin = MARGIN) {
       top: e.y,
     };
   });
-  // flatten removes alpha tricks; no exif/xmp written out.
-  return base.composite(fills).flatten({ background: { r: 255, g: 255, b: 255 } }).png().toBuffer();
+  // flatten merges transparency, removeAlpha drops the channel; no exif/xmp written out.
+  return base
+    .composite(fills)
+    .flatten({ background: { r: 255, g: 255, b: 255 } })
+    .removeAlpha()
+    .png()
+    .toBuffer();
 }
 
 export async function maskedVariance(png, box) {
