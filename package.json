@@ -10,11 +10,16 @@
     "skeleton": "node scripts/skeleton.mjs",
     "locate": "node --env-file-if-exists=.env scripts/locate.mjs && node scripts/score-locate.mjs corpus/out/locate.json",
     "score": "node scripts/score-locate.mjs",
-    "cost": "node scripts/cost.mjs"
+    "cost": "node scripts/cost.mjs",
+    "mask-images": "node scripts/mask-images.mjs",
+    "mask:check": "node scripts/mask-check.mjs"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
     "playwright": "^1.64.1",
     "typescript": "^5.6.0"
+  },
+  "dependencies": {
+    "sharp": "^0.35.5"
   }
 }
