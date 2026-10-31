@@ -18,6 +18,7 @@ pre.reply{background:#f8f8f8;border:1px solid #ddd;padding:8px;font-size:12px;wh
 <body>
 <h1>Curtain — privacy gate, one screen</h1>
 <p class="sub">Left: original. Right: masked + flattened + metadata stripped. Red items are what the attacker recovered from the masked image. Verdict on top. No server — this file works from disk.</p>
+<p class="sub">Pixel check (E3): 3/5 images fully flat; ticket email + clinic note peek through at the pixel level — but the attacker recovered neither (E5). Pixel survival is not a leak.</p>
 <div id="r"></div>
 <script>
 // Pinned runs inlined by scripts/build-screen.mjs. No fetch, no server.
@@ -36,7 +37,7 @@ for (const it of cards) {
   meta.textContent = `located ${it.located} boxes · attacker reply ${it.reply.length} chars`;
   const imgs = document.createElement("div");
   imgs.className = "imgs";
-  for (const [label, src] of [["original", `../corpus/img/${it.name}.png`], ["masked", `../corpus/out/masked/${it.name}.png`]]) {
+  for (const [label, src] of [["original", `img/${it.name}-orig.png`], ["masked", `img/${it.name}-masked.png`]]) {
     const fig = document.createElement("figure");
     const img = document.createElement("img");
     img.src = src;

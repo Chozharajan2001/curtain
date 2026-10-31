@@ -1,7 +1,9 @@
 // S10 screen builder: inlines pinned runs into preview/index.html.
 // Scorer-side (reads key to match leaks, like score-attack). D7 allowlisted.
+// Copies originals + masked PNGs into preview/img/ so the screen is
+// self-contained: no corpus/ or out/ needed, fresh-clone safe.
 // Output works from file:// with zero network.
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, copyFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { findLeaks } from "../src/leaks.mjs";
@@ -28,7 +30,14 @@ const cards = attack.map((a) => {
   };
 });
 
+const imgDir = join(root, "preview", "img");
+mkdirSync(imgDir, { recursive: true });
+for (const c of cards) {
+  copyFileSync(join(root, "corpus", "img", `${c.name}.png`), join(imgDir, `${c.name}-orig.png`));
+  copyFileSync(join(root, "corpus", "out", "masked", `${c.name}.png`), join(imgDir, `${c.name}-masked.png`));
+}
+
 const html = tpl.replace("/*__CARDS__*/", () => JSON.stringify(cards));
 writeFileSync(join(root, "preview", "index.html"), html);
-console.log(`screen: ${cards.length} cards written to preview/index.html`);
+console.log(`screen: ${cards.length} cards written to preview/index.html (+ img/ copies)`);
 console.log(cards.map((c) => `${c.name}: ${c.verdict} leaks=[${c.leaks.join(";") || "none"}]`).join("\n"));
