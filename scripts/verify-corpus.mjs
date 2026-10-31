@@ -7,6 +7,7 @@ import { spawnSync } from "node:child_process";
 const steps = [
   ["planted", ["scripts/count-planted.mjs"]],
   ["locate", ["scripts/score-locate.mjs", "runs/locate-2026-10-30-run3.json"]],
+  ["mask-images", ["scripts/mask-images.mjs", "runs/locate-2026-10-30-run3.json"]],
   ["mask", ["scripts/mask-check.mjs"]],
   ["sam", ["scripts/score-sam.mjs", "runs/sam-2026-10-31.json"]],
   ["attack", ["scripts/score-attack.mjs", "runs/attack-2026-10-31.json"]],
