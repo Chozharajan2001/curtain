@@ -1,0 +1,47 @@
+[
+  {
+    "name": "photo",
+    "kind": "face",
+    "box": {
+      "x": 73,
+      "y": 126,
+      "w": 159,
+      "h": 197
+    },
+    "w": 1046,
+    "h": 522,
+    "error": null
+  },
+  {
+    "name": "photo",
+    "kind": "logo",
+    "box": null,
+    "w": 1046,
+    "h": 522,
+    "error": "no-box"
+  },
+  {
+    "name": "ticket",
+    "kind": "card",
+    "box": null,
+    "w": 1046,
+    "h": 406,
+    "error": "no-box"
+  },
+  {
+    "name": "bank",
+    "kind": "card",
+    "box": null,
+    "w": 1046,
+    "h": 455,
+    "error": "no-box"
+  },
+  {
+    "name": "clinic",
+    "kind": "sig",
+    "box": null,
+    "w": 1046,
+    "h": 478,
+    "error": "no-box"
+  }
+]
