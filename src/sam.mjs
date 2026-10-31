@@ -14,6 +14,8 @@ export const SAM_CONCEPTS = {
 };
 
 export function parseSamBox(text) {
+  // Empty response = SAM matched nothing: clean refusal, not an error.
+  if (!text || !text.trim()) return { box: null, error: null, refused: true };
   const m = text.match(/<\|box;x1=(\d+);y1=(\d+);x2=(\d+);y2=(\d+);/);
   if (!m) return { box: null, error: "no-box" };
   const [, x1, y1, x2, y2] = m.map(Number);

@@ -21,18 +21,30 @@ for (const r of runs) {
   // Map concept kind back to planted category.
   const cat = { face: "face", logo: "logo", card: "card", sig: "sig" }[r.kind];
   const it = byName.get(`${r.name}:${cat}`);
-  if (!it || it.valueKind === "sentinel") {
-    // Face has no ink target; check the box overlaps the planted face graphic area.
-    if (r.kind === "face" && r.box) {
-      console.log(`${r.name}/face: box ${JSON.stringify(r.box)} (sentinel, visual check)`);
-      correct++;
-    } else {
-      console.log(`${r.name}/${r.kind}: no planted target — skip`);
+  if (!it) {
+    console.log(`${r.name}/${r.kind}: no planted target — skip`);
+    continue;
+  }
+  if (it.valueKind === "sentinel") {
+    // Face box centre must land inside the planted face graphic box.
+    if (!r.box) {
+      console.log(`${r.name}/face: NO BOX — miss`);
+      continue;
     }
+    const cx = r.box.x + r.box.w / 2;
+    const cy = r.box.y + r.box.h / 2;
+    const inside = cx >= it.box.x && cx <= it.box.x + it.box.w && cy >= it.box.y && cy <= it.box.y + it.box.h;
+    console.log(`${r.name}/face: centre (${Math.round(cx)},${Math.round(cy)}) ${inside ? "INSIDE" : "OUTSIDE"} ${JSON.stringify(it.box)}`);
+    if (inside) correct++;
     continue;
   }
   if (!r.box) {
-    console.log(`${r.name}/${r.kind}: NO BOX — miss`);
+    if (r.refused) {
+      console.log(`${r.name}/${r.kind}: refused (empty response — correct, no object)`);
+      correct++;
+    } else {
+      console.log(`${r.name}/${r.kind}: NO BOX — miss (error=${r.error ?? "none"})`);
+    }
     continue;
   }
   const cx = r.box.x + r.box.w / 2;

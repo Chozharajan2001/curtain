@@ -18,7 +18,9 @@
     "box": null,
     "w": 1046,
     "h": 522,
-    "error": "no-box"
+    "error": null,
+    "raw": "",
+    "refused": true
   },
   {
     "name": "ticket",
@@ -26,7 +28,9 @@
     "box": null,
     "w": 1046,
     "h": 406,
-    "error": "no-box"
+    "error": null,
+    "raw": "",
+    "refused": true
   },
   {
     "name": "bank",
@@ -34,7 +38,9 @@
     "box": null,
     "w": 1046,
     "h": 455,
-    "error": "no-box"
+    "error": null,
+    "raw": "",
+    "refused": true
   },
   {
     "name": "clinic",
@@ -42,6 +48,8 @@
     "box": null,
     "w": 1046,
     "h": 478,
-    "error": "no-box"
+    "error": null,
+    "raw": "",
+    "refused": true
   }
 ]

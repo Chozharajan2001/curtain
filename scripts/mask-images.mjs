@@ -9,13 +9,16 @@ import { maskImage, MARGIN } from "../src/mask.mjs";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const runFile = process.argv[2] || "runs/locate-2026-10-30-run3.json";
 const runs = JSON.parse(readFileSync(join(root, runFile), "utf8"));
-// SAM boxes replace grounding boxes for the same category (tighter, no margin needed).
+// SAM boxes replace grounding boxes for the same category (tighter, margin 4).
+// Reads the PINNED run so a fresh clone reproduces the committed artefact.
 let samByImg = new Map();
-const samPath = join(root, "corpus/out/sam.json");
+const samPath = join(root, "runs/sam-2026-10-31.json");
 if (existsSync(samPath)) {
   for (const s of JSON.parse(readFileSync(samPath, "utf8"))) {
     if (s.box) samByImg.set(`${s.name}:${s.kind}`, s.box);
   }
+} else {
+  console.log("mask-images: no pinned SAM run — boxes only");
 }
 const outDir = join(root, "corpus/out/masked");
 mkdirSync(outDir, { recursive: true });

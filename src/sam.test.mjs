@@ -12,5 +12,13 @@ test("parseSamBox reads the box record", () => {
 test("parseSamBox fails closed on garbage", () => {
   assert.equal(parseSamBox("hello").error, "no-box");
   assert.equal(parseSamBox("<|box;x1=5;y1=5;x2=5;y2=9;|>").error, "bad-box");
-  assert.equal(parseSamBox("").error, "no-box");
+});
+
+test("parseSamBox treats empty response as clean refusal", () => {
+  for (const t of ["", "   ", null, undefined]) {
+    const r = parseSamBox(t);
+    assert.equal(r.box, null);
+    assert.equal(r.error, null);
+    assert.equal(r.refused, true);
+  }
 });

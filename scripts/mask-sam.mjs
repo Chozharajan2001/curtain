@@ -44,7 +44,13 @@ for (const [name, kind] of PLAN) {
       baseUrl,
     });
     appendUsage(join(root, "usage.jsonl"), usageRecord({ model: "sam-3.1", usage: r.usage, tag: `sam:${name}:${kind}` }));
-    results.push({ name, kind, box: r.box, w: size.w, h: size.h, error: r.error });
+    // Store raw + refused flag so "correctly refused" is verifiable.
+    const entry = { name, kind, box: r.box, w: size.w, h: size.h, error: r.error };
+    if (!r.box) {
+      entry.raw = typeof r.raw === "string" ? r.raw.slice(0, 200) : r.raw;
+      if (r.refused) entry.refused = true;
+    }
+    results.push(entry);
     console.log(`${name}/${kind}: box=${r.box ? JSON.stringify(r.box) : "NONE"} error=${r.error ?? "none"} ms=${Date.now() - t0}`);
     if (r.error) failed++;
   } catch (e) {
