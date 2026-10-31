@@ -5,3 +5,5 @@ dist/
 coverage/
 usage.jsonl
 corpus/out/
+
+preview/skeleton.html
