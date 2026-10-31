@@ -4,8 +4,15 @@
 // Prints per-image pass/fail + ink area + masked area. Usage:
 //   npm run mask-images && npm run mask:check
 import { readFileSync } from "node:fs";
+import { checkManifest } from "../src/manifest.mjs";
 import sharp from "sharp";
 import { maskedVariance, expandBox, MARGIN } from "../src/mask.mjs";
+
+const manifest = checkManifest();
+if (!manifest.ok) {
+  console.error(`mask-check: refusing to score — ${manifest.reason}`);
+  process.exit(2);
+}
 
 const key = JSON.parse(readFileSync("corpus/key/v1.json", "utf8"));
 // Masked area comes from the same run the images were painted with.

@@ -1,7 +1,14 @@
 // Stability over pinned locate runs. Zero API calls.
 // Usage: node scripts/compare-runs.mjs [runA] [runB]
 import { readFileSync } from "node:fs";
+import { checkManifest } from "../src/manifest.mjs";
 import { scoreImage } from "../src/recall.mjs";
+
+const manifest = checkManifest();
+if (!manifest.ok) {
+  console.error(`compare-runs: refusing to score — ${manifest.reason}`);
+  process.exit(2);
+}
 
 const key = JSON.parse(readFileSync("corpus/key/v1.json", "utf8"));
 const a = JSON.parse(
