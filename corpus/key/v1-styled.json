@@ -1,0 +1,293 @@
+{
+  "version": 1,
+  "source": "synthetic-styled",
+  "images": [
+    {
+      "name": "styled-ticket",
+      "file": "corpus/img/styled-ticket.jpg",
+      "width": 1200,
+      "height": 896,
+      "source": "synthetic-styled",
+      "items": [
+        {
+          "category": "name",
+          "value": "Asha Rao",
+          "valueKind": "literal",
+          "box": {
+            "x": 202,
+            "y": 219,
+            "w": 173,
+            "h": 32
+          }
+        },
+        {
+          "category": "email",
+          "value": "asha.rao@example.in",
+          "valueKind": "literal",
+          "box": {
+            "x": 391,
+            "y": 219,
+            "w": 318,
+            "h": 32
+          }
+        },
+        {
+          "category": "phone",
+          "value": "+91 98410 22334",
+          "valueKind": "literal",
+          "box": {
+            "x": 228,
+            "y": 321,
+            "w": 326,
+            "h": 32
+          }
+        },
+        {
+          "category": "order",
+          "value": "ORD-88412",
+          "valueKind": "literal",
+          "box": {
+            "x": 214,
+            "y": 424,
+            "w": 213,
+            "h": 32
+          }
+        },
+        {
+          "category": "card",
+          "value": "4111 1111 1111 1234",
+          "valueKind": "literal",
+          "box": {
+            "x": 248,
+            "y": 526,
+            "w": 354,
+            "h": 33
+          }
+        }
+      ]
+    },
+    {
+      "name": "styled-clinic",
+      "file": "corpus/img/styled-clinic.jpg",
+      "width": 1200,
+      "height": 896,
+      "source": "synthetic-styled",
+      "items": [
+        {
+          "category": "name",
+          "value": "Divya Nair",
+          "valueKind": "literal",
+          "box": {
+            "x": 270,
+            "y": 244,
+            "w": 213,
+            "h": 36
+          }
+        },
+        {
+          "category": "phone",
+          "value": "+91 99400 55667",
+          "valueKind": "literal",
+          "box": {
+            "x": 255,
+            "y": 388,
+            "w": 377,
+            "h": 36
+          }
+        },
+        {
+          "category": "govt",
+          "value": "AXPPI4821K",
+          "valueKind": "literal",
+          "box": {
+            "x": 275,
+            "y": 460,
+            "w": 268,
+            "h": 36
+          }
+        },
+        {
+          "category": "note",
+          "value": "patient reports mild fever since Tuesday",
+          "valueKind": "literal",
+          "box": {
+            "x": 222,
+            "y": 532,
+            "w": 841,
+            "h": 46
+          }
+        },
+        {
+          "category": "sig",
+          "value": "Dr. S. Menon",
+          "valueKind": "literal",
+          "box": {
+            "x": 846,
+            "y": 727,
+            "w": 269,
+            "h": 45
+          }
+        }
+      ]
+    },
+    {
+      "name": "styled-bank",
+      "file": "corpus/img/styled-bank.jpg",
+      "width": 1200,
+      "height": 896,
+      "source": "synthetic-styled",
+      "items": [
+        {
+          "category": "name",
+          "value": "Karthik Iyer",
+          "valueKind": "literal",
+          "box": {
+            "x": 185,
+            "y": 201,
+            "w": 155,
+            "h": 23
+          }
+        },
+        {
+          "category": "account",
+          "value": "50200099887711",
+          "valueKind": "literal",
+          "box": {
+            "x": 208,
+            "y": 248,
+            "w": 237,
+            "h": 22
+          }
+        },
+        {
+          "category": "card",
+          "value": "5500 0000 0000 0004",
+          "valueKind": "literal",
+          "box": {
+            "x": 379,
+            "y": 507,
+            "w": 314,
+            "h": 23
+          }
+        },
+        {
+          "category": "address",
+          "value": "14 Anna Salai, Chennai 600002",
+          "valueKind": "literal",
+          "box": {
+            "x": 770,
+            "y": 201,
+            "w": 290,
+            "h": 69
+          }
+        }
+      ]
+    },
+    {
+      "name": "styled-order",
+      "file": "corpus/img/styled-order.jpg",
+      "width": 1200,
+      "height": 896,
+      "source": "synthetic-styled",
+      "items": [
+        {
+          "category": "name",
+          "value": "Priya Das",
+          "valueKind": "literal",
+          "box": {
+            "x": 216,
+            "y": 380,
+            "w": 252,
+            "h": 32
+          }
+        },
+        {
+          "category": "order",
+          "value": "ORD-10293",
+          "valueKind": "literal",
+          "box": {
+            "x": 204,
+            "y": 509,
+            "w": 123,
+            "h": 53
+          }
+        },
+        {
+          "category": "address",
+          "value": "22 MG Road, Bengaluru 560001",
+          "valueKind": "literal",
+          "box": {
+            "x": 427,
+            "y": 509,
+            "w": 330,
+            "h": 53
+          }
+        },
+        {
+          "category": "phone",
+          "value": "+91 98840 11223",
+          "valueKind": "literal",
+          "box": {
+            "x": 235,
+            "y": 585,
+            "w": 190,
+            "h": 22
+          }
+        },
+        {
+          "category": "email",
+          "value": "priya.d@example.com",
+          "valueKind": "literal",
+          "box": {
+            "x": 434,
+            "y": 585,
+            "w": 236,
+            "h": 22
+          }
+        }
+      ]
+    },
+    {
+      "name": "styled-photo",
+      "file": "corpus/img/styled-photo.jpg",
+      "width": 1200,
+      "height": 896,
+      "source": "synthetic-styled",
+      "items": [
+        {
+          "category": "face",
+          "value": "SENTINEL:face-02",
+          "valueKind": "sentinel",
+          "box": {
+            "x": 137,
+            "y": 252,
+            "w": 194,
+            "h": 257
+          }
+        },
+        {
+          "category": "name",
+          "value": "Ravi Kumar",
+          "valueKind": "literal",
+          "box": {
+            "x": 63,
+            "y": 794,
+            "w": 177,
+            "h": 26
+          }
+        },
+        {
+          "category": "logo",
+          "value": "ACME Corp",
+          "valueKind": "literal",
+          "box": {
+            "x": 943,
+            "y": 60,
+            "w": 197,
+            "h": 58
+          }
+        }
+      ]
+    }
+  ]
+}
