@@ -81,3 +81,23 @@ test("missing manifest or key refuses to score", () => {
 test("keyHash is stable sha256", () => {
   assert.equal(keyHash("abc"), "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad");
 });
+
+test("leak fails closed: scorer exits non-zero when a planted secret leaks", async () => {
+  const { spawnSync } = await import("node:child_process");
+  const { mkdirSync } = await import("node:fs");
+  const { resolve } = await import("node:path");
+  const dir = mkdtempSync(join(tmpdir(), "leak-run-"));
+  try {
+    mkdirSync(join(dir, "corpus", "key"), { recursive: true });
+    const key = JSON.stringify({ images: [{ name: "t", items: [{ category: "email", value: "leak.me@example.com", valueKind: "literal" }] }] });
+    writeFileSync(join(dir, "corpus", "key", "v1.json"), key);
+    writeManifest(join(dir, "corpus", "key", "v1.json"), join(dir, "corpus", "key", "manifest.json"));
+    writeFileSync(join(dir, "run.json"), JSON.stringify([{ name: "t", text: "contact leak.me@example.com today" }]));
+    const repo = resolve(".");
+    const r = spawnSync(process.execPath, [join(repo, "scripts", "score-attack.mjs"), join(dir, "run.json")], { encoding: "utf8", cwd: dir });
+    assert.notEqual(r.status, 0, "leak must not score exit 0");
+    assert.match(r.stdout, /leak\.me@example\.com/);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});

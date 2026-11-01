@@ -50,4 +50,4 @@ for (const r of runs) {
   console.log(`${r.name}: verdict=${verdict} leaks=[${leaks.join("; ") || "none"}]`);
 }
 console.log(`leaks recovered: ${totalLeaks}`);
-process.exit(0);
+process.exit(totalLeaks > 0 ? 1 : 0);
