@@ -30,9 +30,13 @@ Placement 1/1 (face, IoU 0.979), refusal 4/4 (card/sig/logo return empty — cor
 
 What this means: SAM tightens the face mask only. Text-shaped items stay boxes.
 
-## 5. Synthetic data flatters recall (S12, open)
+## 5. Styled renders are worse than the minimal set (E11)
 
-Crisp HTML text at fixed sizes is easier than real photos. The 5 phone photos (pending) + rotated/tiny/low-contrast/split cases will widen every gap above. This file grows when they land.
+Five styled renders (realistic UI, colours, tables, logos) score locate recall 0.773 (17/22), strict 0.682. Bank statement 0/4: the model's boxes sit ~25px below every line on the table layout. Photo misses the planted placeholder face — the model boxed the six drawn people instead. Richer layout = more drift, not less.
+
+## 5b. Synthetic data flatters recall (S12, open)
+
+Crisp HTML text at fixed sizes is easier than real photos. The styled renders above already widen the gap. Real phone photos (pending) will widen it further — renders are not photographs (D28). Rotated/tiny/low-contrast/split synthetics are built and pending a scored run.
 
 ## 6. Out of scope by design (SPEC)
 
