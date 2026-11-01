@@ -1,0 +1,37 @@
+{
+  "runFile": "runs/locate-styled-2026-11-01.json",
+  "keyFile": "corpus/key/v1-styled.json",
+  "results": [
+    {
+      "margin": 16,
+      "pass": 0,
+      "of": 5,
+      "fails": [
+        "styled-ticket: FAIL — name var=2634.69; phone var=3828.53; order var=1013.73",
+        "styled-clinic: FAIL — phone var=2054.48; govt var=380.65; note var=1547.55; sig var=2980.84",
+        "styled-bank: FAIL — name var=11818.75; account var=4518.79; card var=11035.38; address var=10537.48",
+        "styled-order: FAIL — name var=5135.39; order var=2961.12; address var=2960.34",
+        "styled-photo: FAIL — logo var=4223.03"
+      ]
+    },
+    {
+      "margin": 40,
+      "pass": 1,
+      "of": 5,
+      "fails": [
+        "styled-ticket: FAIL — phone var=973.46",
+        "styled-clinic: FAIL — note var=427.37",
+        "styled-bank: FAIL — address var=3098.78",
+        "styled-order: FAIL — name var=1994.40"
+      ]
+    },
+    {
+      "margin": 64,
+      "pass": 4,
+      "of": 5,
+      "fails": [
+        "styled-bank: FAIL — address var=316.47"
+      ]
+    }
+  ]
+}

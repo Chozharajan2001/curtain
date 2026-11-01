@@ -23,7 +23,8 @@
     "variance": "node scripts/variance.mjs",
     "measure:styled": "node scripts/measure-styled.mjs",
     "key:styled": "node scripts/measure-styled.mjs && node scripts/build-styled-key.mjs",
-    "locate:styled": "node --env-file-if-exists=.env scripts/locate.mjs runs/locate-set-styled.json && node scripts/score-locate.mjs corpus/out/locate.json corpus/key/v1-styled.json"
+    "locate:styled": "node --env-file-if-exists=.env scripts/locate.mjs runs/locate-set-styled.json && node scripts/score-locate.mjs corpus/out/locate.json corpus/key/v1-styled.json",
+    "mask:sweep": "node scripts/margin-sweep.mjs"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
