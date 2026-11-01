@@ -30,25 +30,29 @@ export function coverage(a, b) {
 }
 
 export function scoreImage(planted, located, imgW, imgH) {
-  const boxes = located.map((b) => ({ category: b.category, box: b.box }));
+  const byCat = new Map();
+  for (const b of located) {
+    const list = byCat.get(b.category);
+    if (list) list.push(b);
+    else byCat.set(b.category, [b]);
+  }
 
   const pairs = [];
-  planted.forEach((it, i) =>
-    boxes.forEach((b, j) => {
-      if (b.category !== it.category) return;
+  planted.forEach((it, i) => {
+    for (const b of byCat.get(it.category) ?? []) {
       const cov = coverage(it.box, b.box);
-      if (cov >= COVERAGE_HIT) pairs.push({ i, j, cov, iou: iou(it.box, b.box) });
-    })
-  );
+      if (cov >= COVERAGE_HIT) pairs.push({ i, b, cov, iou: iou(it.box, b.box) });
+    }
+  });
   pairs.sort((a, b) => b.cov - a.cov);
 
   const usedPlanted = new Set();
   const usedLocated = new Set();
   const assigned = new Map();
   for (const p of pairs) {
-    if (usedPlanted.has(p.i) || usedLocated.has(p.j)) continue;
+    if (usedPlanted.has(p.i) || usedLocated.has(p.b)) continue;
     usedPlanted.add(p.i);
-    usedLocated.add(p.j);
+    usedLocated.add(p.b);
     assigned.set(p.i, p);
   }
 
@@ -60,7 +64,7 @@ export function scoreImage(planted, located, imgW, imgH) {
       if (a.iou >= IOU_HIT) strictHits++;
       return;
     }
-    const sameCategory = boxes.some((b) => b.category === it.category);
+    const sameCategory = byCat.has(it.category);
     misses.push({
       category: it.category,
       value: it.value,

@@ -1,37 +1,15 @@
 // S7 scorer — the only module that matches attacker text against the key (D7).
 // Any planted literal in the reply = leak, named. Usage:
 //   npm run attack (live + score) or node scripts/score-attack.mjs [file].
-// Refuses to score on a tampered key (S8, D9).
-import { readFileSync } from "node:fs";
+// Refuses to score on a tampered key (S8, D9). Exits 1 when leaks are found.
+import { loadKeyAndRuns } from "./lib/load-inputs.mjs";
 import { findLeaks } from "../src/leaks.mjs";
 import { decide } from "../src/decide.mjs";
-import { checkManifest } from "../src/manifest.mjs";
 
 const keyPath = process.argv[3] || "corpus/key/v1.json";
-const manifestPath = keyPath === "corpus/key/v1.json" ? "corpus/key/manifest.json" : keyPath.replace(/[.]json$/, ".manifest.json");
-const manifest = checkManifest(keyPath, manifestPath);
-if (!manifest.ok) {
-  console.error(`score-attack: refusing to score — ${manifest.reason}`);
-  process.exit(2);
-}
-
-const key = JSON.parse(readFileSync(keyPath, "utf8"));
 const runFile = process.argv[2] || "corpus/out/attack.json";
-let runs;
-try {
-  runs = JSON.parse(readFileSync(runFile, "utf8"));
-} catch {
-  console.log("attack: no run file — run attack first (needs Baseten key)");
-  process.exit(1);
-}
+const { key, runs } = loadKeyAndRuns("score-attack", runFile, keyPath);
 const byName = new Map(key.images.map((im) => [im.name, im]));
-
-// Empty key = empty run: proves nothing, never "released". Fail closed (S8).
-const planted = key.images.reduce((n, im) => n + im.items.length, 0);
-if (planted === 0) {
-  console.log("attack: unverified — key has zero planted items, refusing to score");
-  process.exit(1);
-}
 
 let totalLeaks = 0;
 for (const r of runs) {
@@ -44,7 +22,7 @@ for (const r of runs) {
     console.log(`${r.name}: attacker error ${r.error} — counted as refused`);
     continue;
   }
-  const leaks = findLeaks(r.text, im.items);
+  const leaks = findLeaks(r.text ?? "", im.items);
   totalLeaks += leaks.length;
   const { verdict } = decide(leaks);
   console.log(`${r.name}: verdict=${verdict} leaks=[${leaks.join("; ") || "none"}]`);

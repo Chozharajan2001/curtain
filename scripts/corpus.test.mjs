@@ -61,6 +61,7 @@ test("no product import reads corpus/key", () => {
     "scripts/score-locate.mjs",
     "scripts/score-locate.test.mjs",
     "scripts/compare-runs.mjs",
+    "scripts/lib/load-inputs.mjs",
     "scripts/mask-check.mjs",
     "scripts/score-sam.mjs",
     "scripts/score-attack.mjs",
