@@ -18,7 +18,8 @@ if (!apiKey || !baseUrl) {
   process.exit(2);
 }
 
-const names = readdirSync(join(root, "corpus/out/masked"))
+const maskedDir = process.argv[2] || "corpus/out/masked";
+const names = readdirSync(join(root, maskedDir))
   .filter((n) => n.endsWith(".png"))
   .map((n) => n.slice(0, -4))
   .sort();
@@ -29,7 +30,7 @@ mkdirSync(outDir, { recursive: true });
 const results = [];
 let failed = 0;
 for (const name of names) {
-  const bytes = readFileSync(join(root, "corpus/out/masked", `${name}.png`));
+  const bytes = readFileSync(join(root, maskedDir, `${name}.png`));
   const t0 = Date.now();
   try {
     const r = await attack({

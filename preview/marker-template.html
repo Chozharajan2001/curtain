@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Curtain — box marker for phone photos</title>
+<style>
+body{font-family:Arial,sans-serif;margin:24px;background:#f4f4f4}
+#wrap{position:relative;display:inline-block;border:2px solid #333;user-select:none;-webkit-user-select:none}
+#img{display:block;max-width:1100px;pointer-events:auto}
+#img{user-drag:none;-webkit-user-drag:none}
+.box{position:absolute;border:2px solid red;background:rgba(255,0,0,.12)}
+.box span{position:absolute;top:-20px;left:0;background:red;color:#fff;font-size:12px;padding:0 4px;white-space:nowrap}
+.row{margin:8px 0}button{margin-right:8px}pre{background:#fff;border:1px solid #ccc;padding:8px;max-width:1100px;overflow:auto}
+</style>
+</head>
+<body>
+<h1>Box marker — phone photos</h1>
+<p>Open each photo, drag boxes around every planted secret, pick its category, paste the exact text. Copy the JSON into <code>corpus/key/v1-phone.json</code>.</p>
+<div class="row">
+<label>Photo: <select id="sel"></select></label>
+<label>Category: <select id="cat"></select></label>
+<label>Value: <input id="val" size="30" placeholder="exact planted text"></label>
+<button id="undo">Undo last</button>
+<button id="clear">Clear photo</button>
+</div>
+<div id="wrap"><img id="img" alt="photo" draggable="false"></div>
+<h2>Key JSON for this photo</h2>
+<pre id="out"></pre>
+<script>
+const CATS = ["name","phone","email","address","order","account","card","govt","face","note","sig","logo"];
+const PHOTOS = /*__PHOTOS__*/;
+const sel = document.getElementById("sel"), cat = document.getElementById("cat"),
+      val = document.getElementById("val"), img = document.getElementById("img"),
+      wrap = document.getElementById("wrap"), out = document.getElementById("out");
+CATS.forEach(c => { const o = document.createElement("option"); o.value = c; o.textContent = c; cat.appendChild(o); });
+PHOTOS.forEach(p => { const o = document.createElement("option"); o.value = p; o.textContent = p; sel.appendChild(o); });
+let boxes = {}; // photo -> [{category,value,box}]
+let drawing = null;
+function render() {
+  wrap.querySelectorAll(".box").forEach(b => b.remove());
+  (boxes[sel.value] || []).forEach(b => {
+    const d = document.createElement("div");
+    d.className = "box";
+    const r = img.getBoundingClientRect(), nat = { w: img.naturalWidth, h: img.naturalHeight };
+    const sx = r.width / nat.w, sy = r.height / nat.h;
+    d.style.left = b.box.x * sx + "px"; d.style.top = b.box.y * sy + "px";
+    d.style.width = b.box.w * sx + "px"; d.style.height = b.box.h * sy + "px";
+    const s = document.createElement("span");
+    s.textContent = b.category + ": " + b.value;
+    d.appendChild(s); wrap.appendChild(d);
+  });
+  const items = boxes[sel.value] || [];
+  const unfilled = items.filter(b => !b.value || b.value === "EDIT-ME").length;
+  out.textContent = JSON.stringify({ name: sel.value, items }, null, 2);
+  if (unfilled > 0) out.textContent = `!! ${unfilled} box(es) still EDIT-ME — fill every value before copying !!\n` + out.textContent;
+}
+function load() {
+  img.src = "img/" + sel.value;
+  img.onload = render;
+}
+img.addEventListener("mousedown", e => {
+  const r = img.getBoundingClientRect();
+  drawing = { x0: e.clientX - r.left, y0: e.clientY - r.top };
+});
+img.addEventListener("mouseup", e => {
+  if (!drawing) return;
+  const r = img.getBoundingClientRect();
+  const sx = img.naturalWidth / r.width, sy = img.naturalHeight / r.height;
+  const x1 = Math.round(Math.min(drawing.x0, e.clientX - r.left) * sx);
+  const y1 = Math.round(Math.min(drawing.y0, e.clientY - r.top) * sy);
+  const x2 = Math.round(Math.max(drawing.x0, e.clientX - r.left) * sx);
+  const y2 = Math.round(Math.max(drawing.y0, e.clientY - r.top) * sy);
+  drawing = null;
+  if (x2 - x1 < 3 || y2 - y1 < 3) return;
+  (boxes[sel.value] = boxes[sel.value] || []).push({
+    category: cat.value, value: val.value.trim() || "EDIT-ME",
+    valueKind: cat.value === "face" ? "sentinel" : "literal",
+    box: { x: x1, y: y1, w: x2 - x1, h: y2 - y1 }
+  });
+  render();
+});
+document.getElementById("undo").onclick = () => { (boxes[sel.value] || []).pop(); render(); };
+document.getElementById("clear").onclick = () => { boxes[sel.value] = []; render(); };
+sel.onchange = load;
+load();
+</script>
+</body>
+</html>

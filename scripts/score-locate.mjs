@@ -1,18 +1,22 @@
-// Locate scorer â€” reads the key plus one PINNED run file (D7).
-// Usage: node scripts/score-locate.mjs [runs/<file>.json]
+// Locate scorer  reads the key plus one PINNED run file (D7).
+// Usage: node scripts/score-locate.mjs [run.json] [key.json]
 // Zero API calls. The pinned file is committed; corpus/out/ is not.
 import { readFileSync } from "node:fs";
 import { checkManifest } from "../src/manifest.mjs";
 import { scoreImage } from "../src/recall.mjs";
 
-const manifest = checkManifest();
+const runFile = process.argv[2] || "runs/locate-2026-10-30-run2.json";
+// Optional key override for alternate sets (S12), e.g. corpus/key/v1-styled.json
+const keyPath = process.argv[3] || "corpus/key/v1.json";
+const manifestPath =
+  keyPath === "corpus/key/v1.json" ? "corpus/key/manifest.json" : keyPath.replace(/[.]json$/, ".manifest.json");
+const manifest = checkManifest(keyPath, manifestPath);
 if (!manifest.ok) {
-  console.error(`score-locate: refusing to score — ${manifest.reason}`);
+  console.error("score-locate: refusing to score " + manifest.reason);
   process.exit(2);
 }
 
-const key = JSON.parse(readFileSync("corpus/key/v1.json", "utf8"));
-const runFile = process.argv[2] || "runs/locate-2026-10-30-run2.json";
+const key = JSON.parse(readFileSync(keyPath, "utf8"));
 const runs = JSON.parse(readFileSync(runFile, "utf8"));
 const byName = new Map(runs.map((r) => [r.name, r]));
 

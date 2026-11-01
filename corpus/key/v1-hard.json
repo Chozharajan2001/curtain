@@ -1,0 +1,152 @@
+{
+  "version": 1,
+  "source": "synthetic-hard",
+  "images": [
+    {
+      "name": "hard-rotated",
+      "file": "corpus/img/hard-rotated.png",
+      "width": 1046,
+      "height": 291,
+      "source": "synthetic-hard",
+      "items": [
+        {
+          "category": "name",
+          "value": "Meera Krishnan",
+          "valueKind": "literal",
+          "box": {
+            "x": 130,
+            "y": 156,
+            "w": 128,
+            "h": 46
+          }
+        },
+        {
+          "category": "card",
+          "value": "4111 1111 1111 4321",
+          "valueKind": "literal",
+          "box": {
+            "x": 311,
+            "y": 153,
+            "w": 165,
+            "h": 54
+          }
+        }
+      ]
+    },
+    {
+      "name": "hard-tiny",
+      "file": "corpus/img/hard-tiny.png",
+      "width": 1046,
+      "height": 273,
+      "source": "synthetic-hard",
+      "items": [
+        {
+          "category": "name",
+          "value": "Arun Prakash",
+          "valueKind": "literal",
+          "box": {
+            "x": 102,
+            "y": 155,
+            "w": 55,
+            "h": 10
+          }
+        },
+        {
+          "category": "account",
+          "value": "60987654321098",
+          "valueKind": "literal",
+          "box": {
+            "x": 180,
+            "y": 155,
+            "w": 70,
+            "h": 10
+          }
+        },
+        {
+          "category": "phone",
+          "value": "+91 97654 32109",
+          "valueKind": "literal",
+          "box": {
+            "x": 89,
+            "y": 178,
+            "w": 70,
+            "h": 10
+          }
+        }
+      ]
+    },
+    {
+      "name": "hard-lowcontrast",
+      "file": "corpus/img/hard-lowcontrast.png",
+      "width": 1046,
+      "height": 320,
+      "source": "synthetic-hard",
+      "items": [
+        {
+          "category": "email",
+          "value": "faded.user@example.com",
+          "valueKind": "literal",
+          "box": {
+            "x": 128,
+            "y": 157,
+            "w": 210,
+            "h": 20
+          }
+        },
+        {
+          "category": "order",
+          "value": "ORD-55501",
+          "valueKind": "literal",
+          "box": {
+            "x": 124,
+            "y": 204,
+            "w": 96,
+            "h": 20
+          }
+        }
+      ]
+    },
+    {
+      "name": "hard-split",
+      "file": "corpus/img/hard-split.png",
+      "width": 1046,
+      "height": 349,
+      "source": "synthetic-hard",
+      "items": [
+        {
+          "category": "card",
+          "value": "5500 0000",
+          "valueKind": "literal",
+          "box": {
+            "x": 122,
+            "y": 157,
+            "w": 85,
+            "h": 20
+          }
+        },
+        {
+          "category": "card",
+          "value": "0000 0009",
+          "valueKind": "literal",
+          "box": {
+            "x": 73,
+            "y": 186,
+            "w": 85,
+            "h": 20
+          }
+        },
+        {
+          "category": "order",
+          "value": "ORD-77881",
+          "valueKind": "literal",
+          "box": {
+            "x": 111,
+            "y": 232,
+            "w": 96,
+            "h": 20
+          }
+        }
+      ]
+    }
+  ]
+}
