@@ -24,9 +24,17 @@ if (existsSync(samPath)) {
 const outDir = join(root, process.argv[3] || "corpus/out/masked");
 mkdirSync(outDir, { recursive: true });
 
+const imgByStem = new Map(
+  readdirSync(join(root, "corpus/img")).map((n) => [n.slice(0, n.lastIndexOf(".")), n])
+);
+
 const manifest = [];
 for (const r of runs) {
-  const imgFile = readdirSync(join(root, "corpus/img")).find((n) => n.startsWith(r.name + "."));
+  const imgFile = imgByStem.get(r.name);
+  if (!imgFile) {
+    console.log(`${r.name}: error=no-such-image`);
+    continue;
+  }
   const input = readFileSync(join(root, "corpus/img", imgFile));
   const boxes = [];
   let samUsed = 0;

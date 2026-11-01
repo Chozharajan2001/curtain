@@ -1,0 +1,138 @@
+[
+  {
+    "name": "hard-rotated",
+    "w": 1046,
+    "h": 291,
+    "boxes": [
+      {
+        "category": "name",
+        "value": "Meera Krishnan",
+        "box": {
+          "x": 127,
+          "y": 156,
+          "w": 129,
+          "h": 32
+        }
+      },
+      {
+        "category": "card",
+        "value": "4111 1111 1111 4321",
+        "box": {
+          "x": 311,
+          "y": 150,
+          "w": 172,
+          "h": 32
+        }
+      }
+    ],
+    "dropped": 0,
+    "error": null
+  },
+  {
+    "name": "hard-tiny",
+    "w": 1046,
+    "h": 273,
+    "boxes": [
+      {
+        "category": "name",
+        "value": "Arun Prakash",
+        "box": {
+          "x": 115,
+          "y": 160,
+          "w": 85,
+          "h": 11
+        }
+      },
+      {
+        "category": "account",
+        "value": "80087654321098",
+        "box": {
+          "x": 228,
+          "y": 160,
+          "w": 105,
+          "h": 11
+        }
+      },
+      {
+        "category": "phone",
+        "value": "+91 97654 32109",
+        "box": {
+          "x": 98,
+          "y": 183,
+          "w": 90,
+          "h": 11
+        }
+      }
+    ],
+    "dropped": 0,
+    "error": null
+  },
+  {
+    "name": "hard-lowcontrast",
+    "w": 1046,
+    "h": 320,
+    "boxes": [
+      {
+        "category": "email",
+        "value": "faded.user@example.com",
+        "box": {
+          "x": 126,
+          "y": 180,
+          "w": 208,
+          "h": 17
+        }
+      },
+      {
+        "category": "order",
+        "value": "ORD-55501",
+        "box": {
+          "x": 121,
+          "y": 225,
+          "w": 102,
+          "h": 17
+        }
+      }
+    ],
+    "dropped": 0,
+    "error": null
+  },
+  {
+    "name": "hard-split",
+    "w": 1046,
+    "h": 349,
+    "boxes": [
+      {
+        "category": "card",
+        "value": "5500 0000",
+        "box": {
+          "x": 152,
+          "y": 165,
+          "w": 126,
+          "h": 20
+        }
+      },
+      {
+        "category": "card",
+        "value": "0000 0009",
+        "box": {
+          "x": 74,
+          "y": 196,
+          "w": 134,
+          "h": 20
+        }
+      },
+      {
+        "category": "order",
+        "value": "ORD-77881",
+        "box": {
+          "x": 115,
+          "y": 244,
+          "w": 95,
+          "h": 19
+        }
+      }
+    ],
+    "dropped": 0,
+    "error": null
+  }
+]

@@ -1,23 +1,13 @@
-// Locate scorer  reads the key plus one PINNED run file (D7).
+// Locate scorer — reads the key plus one PINNED run file (D7).
 // Usage: node scripts/score-locate.mjs [run.json] [key.json]
 // Zero API calls. The pinned file is committed; corpus/out/ is not.
-import { readFileSync } from "node:fs";
-import { checkManifest } from "../src/manifest.mjs";
+import { loadKeyAndRuns } from "./lib/load-inputs.mjs";
 import { scoreImage } from "../src/recall.mjs";
 
 const runFile = process.argv[2] || "runs/locate-2026-10-30-run2.json";
 // Optional key override for alternate sets (S12), e.g. corpus/key/v1-styled.json
 const keyPath = process.argv[3] || "corpus/key/v1.json";
-const manifestPath =
-  keyPath === "corpus/key/v1.json" ? "corpus/key/manifest.json" : keyPath.replace(/[.]json$/, ".manifest.json");
-const manifest = checkManifest(keyPath, manifestPath);
-if (!manifest.ok) {
-  console.error("score-locate: refusing to score " + manifest.reason);
-  process.exit(2);
-}
-
-const key = JSON.parse(readFileSync(keyPath, "utf8"));
-const runs = JSON.parse(readFileSync(runFile, "utf8"));
+const { key, runs } = loadKeyAndRuns("score-locate", runFile, keyPath);
 const byName = new Map(runs.map((r) => [r.name, r]));
 
 let planted = 0;
@@ -33,7 +23,7 @@ for (const im of key.images) {
     broken++;
     continue;
   }
-  const s = scoreImage(im.items, run.boxes, run.w ?? im.width, run.h ?? im.height);
+  const s = scoreImage(im.items, run.boxes ?? [], run.w ?? im.width, run.h ?? im.height);
   planted += s.planted;
   hits += s.hits;
   strict += s.strictHits;

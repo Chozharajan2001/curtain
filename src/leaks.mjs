@@ -7,11 +7,15 @@ export function norm(s) {
 
 export function findLeaks(attackerText, items) {
   const hay = norm(attackerText);
-  const leaks = [];
+  const needles = [];
   for (const it of items) {
     if (it.valueKind !== "literal") continue;
     if (it.value.length < 3) continue;
-    if (hay.includes(norm(it.value))) leaks.push(it.value);
+    needles.push({ raw: it.value, n: norm(it.value) });
+  }
+  const leaks = [];
+  for (const { raw, n } of needles) {
+    if (n && hay.includes(n)) leaks.push(raw);
   }
   return [...new Set(leaks)];
 }

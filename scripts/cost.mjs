@@ -8,8 +8,14 @@ if (!existsSync("usage.jsonl")) {
 }
 const lines = readFileSync("usage.jsonl", "utf8").trim().split("\n").filter(Boolean);
 let sum = 0;
+let product = 0;
+let probe = 0;
+let unpriced = 0;
 for (const l of lines) {
-  const usd = JSON.parse(l).usd;
-  if (typeof usd === "number") sum += usd;
+  const r = JSON.parse(l);
+  if (typeof r.usd === "number") sum += r.usd;
+  else unpriced++;
+  if ((r.tag ?? "").startsWith("probe") || (r.tag ?? "").includes("sweep") || (r.tag ?? "").includes("blur")) probe++;
+  else product++;
 }
-console.log(`calls=${lines.length} usd=${sum.toFixed(4)}`);
+console.log(`calls=${lines.length} usd=${sum.toFixed(4)} (product=${product} probe=${probe} unpriced=${unpriced})`);

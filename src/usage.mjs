@@ -19,12 +19,14 @@ export function costUsd(model, usage) {
 }
 
 export function usageRecord({ model, usage, tag }) {
+  const usd = costUsd(model, usage);
   return {
     ts: new Date().toISOString(),
     model,
     tag,
     usage: usage ?? null,
-    usd: costUsd(model, usage),
+    usd,
+    note: usd === null ? "unpriced — true spend from Billing page" : undefined,
   };
 }
 

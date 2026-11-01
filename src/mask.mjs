@@ -53,12 +53,12 @@ export async function maskedVariance(png, box) {
     .removeAlpha()
     .raw()
     .toBuffer({ resolveWithObject: true });
-  let sum = 0;
-  let sum2 = 0;
+  let mean = 0;
+  let m2 = 0;
   for (let i = 0; i < data.length; i++) {
-    sum += data[i];
-    sum2 += data[i] * data[i];
+    const d = data[i] - mean;
+    mean += d / (i + 1);
+    m2 += d * (data[i] - mean);
   }
-  const mean = sum / data.length;
-  return sum2 / data.length - mean * mean;
+  return data.length > 1 ? m2 / data.length : 0;
 }

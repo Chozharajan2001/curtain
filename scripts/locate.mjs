@@ -28,10 +28,14 @@ const names = JSON.parse(readFileSync(join(root, setFile), "utf8"));
 const results = [];
 let failed = 0;
 
+// One directory listing for the whole run: stem -> filename.
+const { readdirSync } = await import("node:fs");
+const imgByStem = new Map(
+  readdirSync(join(root, "corpus", "img")).map((n) => [n.slice(0, n.lastIndexOf(".")), n])
+);
+
 for (const name of names) {
-  // Find the file by stem (any extension). EXIF stripped on load.
-  const { readdirSync } = await import("node:fs");
-  const match = readdirSync(join(root, "corpus", "img")).find((n) => n.startsWith(name + "."));
+  const match = imgByStem.get(name);
   if (!match) {
     results.push({ name, boxes: [], dropped: 0, error: "no-such-image" });
     console.log(`${name}: error=no-such-image`);
