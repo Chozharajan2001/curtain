@@ -19,10 +19,14 @@ pre.reply{background:#f8f8f8;border:1px solid #ddd;padding:8px;font-size:12px;wh
 <h1>Curtain — privacy gate, one screen</h1>
 <p class="sub">Left: original. Right: masked + flattened + metadata stripped. Red items are what the attacker recovered from the masked image. Verdict on top. No server — this file works from disk.</p>
 <p class="sub">Pixel check (E3): 3/5 images fully flat; ticket email + clinic note peek through at the pixel level — but the attacker recovered neither (E5). Pixel survival is not a leak.</p>
+<p class="sub" id="stamp"></p>
 <div id="r"></div>
 <script>
 // Pinned runs inlined by scripts/build-screen.mjs. No fetch, no server.
 const cards = /*__CARDS__*/;
+const stamp = /*__STAMP__*/;
+document.getElementById("stamp").textContent =
+  `Locate ${stamp.locateRun} · attack ${stamp.attackRun} · built ${stamp.built} · recall ${stamp.recall}. Trust the every-run number, not the best run.`;
 const d = document.getElementById("r");
 for (const it of cards) {
   const c = document.createElement("div");
@@ -59,6 +63,12 @@ for (const it of cards) {
   pre.className = "reply";
   pre.textContent = "attacker says: " + (it.reply || "(nothing)");
   c.append(badge, title, meta, imgs, leakLine, pre);
+  if (it.refusal) {
+    const r = document.createElement("div");
+    r.className = "clean";
+    r.textContent = "refusal = capability: the attacker sees PII when present — our masks revealed nothing to trigger it (E5b).";
+    c.appendChild(r);
+  }
   d.appendChild(c);
 }
 </script>

@@ -6,5 +6,5 @@ import { spawnSync } from "node:child_process";
 test("cost prints calls and usd lines", () => {
   const r = spawnSync(process.execPath, ["scripts/cost.mjs"], { encoding: "utf8" });
   assert.equal(r.status, 0);
-  assert.match(r.stdout, /^calls=\d+ usd=\d+\.\d{4}\n$/);
+  assert.match(r.stdout, /^calls=\d+ usd=\d+\.\d{4}( \(product=\d+ probe=\d+ unpriced=\d+\))?\n$/);
 });

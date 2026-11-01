@@ -18,6 +18,10 @@ const locate = JSON.parse(readFileSync(join(root, "runs/locate-2026-10-30-run3.j
 const locByName = new Map(locate.map((r) => [r.name, r.boxes.length]));
 const keyByName = new Map(key.images.map((im) => [im.name, im.items]));
 
+function isRefusal(text) {
+  return /can't (transcribe|provide|share|disclose)|personal (information|data|financial)|privacy|not able to (transcribe|share|provide)/i.test(text ?? "");
+}
+
 const cards = attack.map((a) => {
   const leaks = findLeaks(a.text, keyByName.get(a.name) ?? []);
   const { verdict } = decide(a.error ? ["attacker-error"] : leaks);
@@ -27,8 +31,16 @@ const cards = attack.map((a) => {
     leaks,
     located: locByName.get(a.name) ?? 0,
     reply: a.text,
+    refusal: isRefusal(a.text),
   };
 });
+
+const stamp = {
+  locateRun: "runs/locate-2026-10-30-run3.json",
+  attackRun: "runs/attack-2026-10-31.json",
+  built: new Date().toISOString().slice(0, 10),
+  recall: "0.909 (20/22) run3 · every-run 0.727 (16/22) · median 0.864",
+};
 
 const imgDir = join(root, "preview", "img");
 mkdirSync(imgDir, { recursive: true });
@@ -37,7 +49,8 @@ for (const c of cards) {
   copyFileSync(join(root, "corpus", "out", "masked", `${c.name}.png`), join(imgDir, `${c.name}-masked.png`));
 }
 
-const html = tpl.replace("/*__CARDS__*/", () => JSON.stringify(cards));
+let html = tpl.replace("/*__CARDS__*/", () => JSON.stringify(cards));
+html = html.replace("/*__STAMP__*/", () => JSON.stringify(stamp));
 writeFileSync(join(root, "preview", "index.html"), html);
 console.log(`screen: ${cards.length} cards written to preview/index.html (+ img/ copies)`);
 console.log(cards.map((c) => `${c.name}: ${c.verdict} leaks=[${c.leaks.join(";") || "none"}]`).join("\n"));
