@@ -8,13 +8,16 @@ import { checkManifest } from "../src/manifest.mjs";
 import sharp from "sharp";
 import { maskedVariance, expandBox, MARGIN } from "../src/mask.mjs";
 
-const manifest = checkManifest();
+const keyPath = process.argv[3] || "corpus/key/v1.json";
+const maskedDir = process.argv[4] || "corpus/out/masked";
+const manifestPath =
+  keyPath === "corpus/key/v1.json" ? "corpus/key/manifest.json" : keyPath.replace(/[.]json$/, ".manifest.json");
+const manifest = checkManifest(keyPath, manifestPath);
 if (!manifest.ok) {
-  console.error(`mask-check: refusing to score � ${manifest.reason}`);
+  console.error("mask-check: refusing to score " + manifest.reason);
   process.exit(2);
 }
-
-const key = JSON.parse(readFileSync("corpus/key/v1.json", "utf8"));
+const key = JSON.parse(readFileSync(keyPath, "utf8"));
 // Masked area comes from the same run the images were painted with.
 const runFile = process.argv[2] || "runs/locate-2026-10-30-run3.json";
 const runs = JSON.parse(readFileSync(runFile, "utf8"));
@@ -26,7 +29,7 @@ let maskedArea = 0;
 let imgArea = 0;
 const failures = [];
 for (const im of key.images) {
-  const path = `corpus/out/masked/${im.name}.png`;
+  const path = `${maskedDir}/${im.name}.png`;
   let buf;
   try {
     buf = readFileSync(path);

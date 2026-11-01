@@ -38,6 +38,14 @@ Five styled renders (realistic UI, colours, tables, logos) score locate recall 0
 
 Crisp HTML text at fixed sizes is easier than real photos. The styled renders above already widen the gap. Real phone photos (pending) will widen it further — renders are not photographs (D28). Rotated/tiny/low-contrast/split synthetics are built and pending a scored run.
 
+## 5c. Styled renders break the mask at product margin (E12)
+
+Same masks, product margin 16: 0/5 styled images pass pixel-uniformity. The model's boxes clip text width by up to 48px on these renders (wide letter spacing), and a fixed margin cannot cover a width error. Margin sweep: 16 → 0/5, 40 → 1/5, 64 → 4/5 (bank address still leaks a 9px corner where two lines meet). Margins are per-corpus tuning, not a product claim.
+
+## 5d. Attacker recovers 0/22 on styled masks, and refuses (E13)
+
+Even with the weaker mask (margin 16), Muse Spark Open recovered 0 of 22 planted values. On bank and clinic it refused outright ("I can't provide a verbatim transcription of personal financial details... fragments appear at the edges of the redactions") — the same safety-as-capability signal as E5b.
+
 ## 6. Out of scope by design (SPEC)
 
 PDF text layers, video, multi-user accounts, auth, database, local models, fine-tuning, throughput. Unplanted template text (e.g. clinic DOB read by the attacker) is outside the 11 SPEC categories — the key scores planted secrets only.

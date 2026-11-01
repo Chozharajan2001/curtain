@@ -7,13 +7,15 @@ import { findLeaks } from "../src/leaks.mjs";
 import { decide } from "../src/decide.mjs";
 import { checkManifest } from "../src/manifest.mjs";
 
-const manifest = checkManifest();
+const keyPath = process.argv[3] || "corpus/key/v1.json";
+const manifestPath = keyPath === "corpus/key/v1.json" ? "corpus/key/manifest.json" : keyPath.replace(/[.]json$/, ".manifest.json");
+const manifest = checkManifest(keyPath, manifestPath);
 if (!manifest.ok) {
   console.error(`score-attack: refusing to score — ${manifest.reason}`);
   process.exit(2);
 }
 
-const key = JSON.parse(readFileSync("corpus/key/v1.json", "utf8"));
+const key = JSON.parse(readFileSync(keyPath, "utf8"));
 const runFile = process.argv[2] || "corpus/out/attack.json";
 let runs;
 try {

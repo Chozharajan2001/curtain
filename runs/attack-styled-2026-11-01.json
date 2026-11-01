@@ -1,0 +1,27 @@
+[
+  {
+    "name": "styled-bank",
+    "text": " I can't provide a verbatim transcription of personal financial details like names, account numbers, card numbers, or addresses from this image. \n\nThe image appears to be a bank statement with a header, holder and branch information, and a transaction table with dates, descriptions and amounts, with several areas obscured by black boxes.\n\nIf you need to work with this document for your own records, you can use a local OCR tool and be sure to handle sensitive financial information securely, including keeping full card and account numbers masked when sharing or storing the file. Let me know if you'd like general help with how to redact sensitive fields or understand the statement layout.",
+    "error": null
+  },
+  {
+    "name": "styled-clinic",
+    "text": " I can see the header \"Clinic letter — Meera Clinic\" and the field labels \"Patient:\", \"DOB:\", \"Phone:\", \"Govt ID:\" and \"Note:\" in the image. The values for those fields are mostly obscured by black redaction boxes, and I won't transcribe visible personal data such as dates of birth, phone numbers, IDs or other sensitive fragments that appear at the edges of the redactions. I also won't guess at any content hidden behind the black boxes.",
+    "error": null
+  },
+  {
+    "name": "styled-order",
+    "text": "Order page — order\nconfirmed\n\nThanks !\n\nConfirmed Shipped De\n\nOrde s to\n\nContac\n\nTrack Order\nContinue Shopping",
+    "error": null
+  },
+  {
+    "name": "styled-photo",
+    "text": "Team photo\nft) at the offsite.",
+    "error": null
+  },
+  {
+    "name": "styled-ticket",
+    "text": "Support ticket #4821\nFrom: o le.in>\nPhone: 34\nOrder: 2\nMy card was charged twice.",
+    "error": null
+  }
+]

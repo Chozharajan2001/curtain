@@ -1,13 +1,14 @@
 // Mask runner: run3 located boxes, with SAM tight boxes swapped in where SAM
 // found an object (S6). Reads runs/ + corpus/out/sam.json, never the key (D7).
 // Output: corpus/out/masked/.
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { maskImage, MARGIN } from "../src/mask.mjs";
+import { maskImage, MARGIN as DEFAULT_MARGIN } from "../src/mask.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const runFile = process.argv[2] || "runs/locate-2026-10-30-run3.json";
+const MARGIN = Number(process.env.MASK_MARGIN || DEFAULT_MARGIN);
 const runs = JSON.parse(readFileSync(join(root, runFile), "utf8"));
 // SAM boxes replace grounding boxes for the same category (tighter, margin 4).
 // Reads the PINNED run so a fresh clone reproduces the committed artefact.
@@ -20,12 +21,13 @@ if (existsSync(samPath)) {
 } else {
   console.log("mask-images: no pinned SAM run — boxes only");
 }
-const outDir = join(root, "corpus/out/masked");
+const outDir = join(root, process.argv[3] || "corpus/out/masked");
 mkdirSync(outDir, { recursive: true });
 
 const manifest = [];
 for (const r of runs) {
-  const input = readFileSync(join(root, "corpus/img", `${r.name}.png`));
+  const imgFile = readdirSync(join(root, "corpus/img")).find((n) => n.startsWith(r.name + "."));
+  const input = readFileSync(join(root, "corpus/img", imgFile));
   const boxes = [];
   let samUsed = 0;
   for (const b of r.boxes) {
