@@ -19,7 +19,8 @@
     "verify:corpus": "node scripts/verify-corpus.mjs",
     "build-screen": "node scripts/build-screen.mjs",
     "build-marker": "node scripts/build-marker.mjs",
-    "build-hard": "node scripts/build-hard.mjs"
+    "build-hard": "node scripts/build-hard.mjs",
+    "variance": "node scripts/variance.mjs"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
