@@ -1,6 +1,7 @@
-# LIMITATIONS.md — what Curtain cannot do, with numbers
+# What Curtain cannot do, with numbers
 
-Every claim carries its evidence id. No id, no number (repo rule).
+Every bracketed id (E2, E7, …) is defined in `EVIDENCE.md`, same folder:
+what it measures in plain words, plus the command that prints it.
 
 ## 1. Locate misses small text, and the miss rate moves run to run (E2, E2c, E7)
 
