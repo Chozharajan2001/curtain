@@ -50,6 +50,8 @@ server.registerTool(
     inputSchema: { imageBase64: z.string().describe("PNG or JPEG bytes, base64") },
   },
   async ({ imageBase64 }) => {
+    if (!env("META_API_KEY", ""))
+      return { content: [{ type: "text", text: JSON.stringify({ error: "server missing META_API_KEY", boxes: [] }) }], isError: true };
     const input = Buffer.from(imageBase64, "base64");
     const { dataUrl, imgW, imgH } = await toSendable(input);
     const r = await locate({
@@ -91,6 +93,8 @@ server.registerTool(
     },
   },
   async ({ imageBase64, boxes, secrets }) => {
+    if (!env("BASETEN_API_KEY", "") || !env("BASETEN_BASE_URL", ""))
+      return { content: [{ type: "text", text: JSON.stringify({ verdict: "refused", reason: "server missing BASETEN_API_KEY/BASETEN_BASE_URL", leaks: [] }) }], isError: true };
     const input = Buffer.from(imageBase64, "base64");
     const entries = (boxes ?? []).map((b) => (b.box ? { box: b.box, margin: b.margin ?? 16 } : { box: b, margin: 16 }));
     const masked = await maskImage(input, entries);
