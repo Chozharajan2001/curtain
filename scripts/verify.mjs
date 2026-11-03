@@ -26,7 +26,7 @@ function walkTests(dir, out = []) {
   return out;
 }
 
-const files = [...walkTests("src"), ...walkTests("scripts")];
+const files = [...walkTests("src"), ...walkTests("scripts"), ...walkTests("mcp")];
 
 if (files.length === 0) {
   console.log("0 checks");
