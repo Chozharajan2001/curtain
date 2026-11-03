@@ -1,0 +1,9 @@
+{
+  "tool": "api-verify",
+  "status": 200,
+  "result": {
+    "verdict": "refused",
+    "reason": "attacker-error: empty-reply",
+    "leaks": []
+  }
+}
