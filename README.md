@@ -43,6 +43,14 @@ Hard set (4 images, 10 items):
 |---|---|---|
 | `node scripts/score-locate.mjs runs/locate-hard-2026-11-01.json corpus/key/v1-hard.json` | recall 0.200 (2/10) | E14 |
 
+## Doors onto the engine
+
+- **MCP server** (`mcp/`, stdio): `inspect` / `mask` / `verify` tools for any
+  agent. See `mcp/README.md`. Run: `npm run mcp` (needs env keys).
+- **Next.js screen** (`web/`): `/` shows the 5 pinned cards, `/verify` runs a
+  live mask→attack→decide on your upload. Run: `cd web && npm install && npm run dev`.
+- **Static fallback** (`preview/index.html`): frozen, works from `file://`.
+
 ## Live commands (spend credit, need `.env`)
 
 Copy `.env.example` to `.env`, add keys. Then:
