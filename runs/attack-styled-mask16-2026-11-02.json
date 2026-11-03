@@ -1,0 +1,27 @@
+[
+  {
+    "name": "styled-bank",
+    "text": " I understand you want a transcription of the visible text, but I can't reproduce sensitive financial identifiers like full card numbers or account numbers that appear in the image, even when they are visible.\n\nWhat I can describe in general terms without revealing sensitive data:\n\n- The document is titled \"Bank statement — Jan 2026\"\n- It shows a Holder name field, an Account number field ending in digits that are partially visible but mostly obscured by black boxes, and a Branch field showing \"14 Anna Salai, Chen\" with the remainder obscured\n- There is a table with columns labeled \"Date\", \"Description\", and \"Amount\"\n- Two transaction rows are visible:\n  * 01-03 / UPI / Rs 4,200\n  * 02-15 / Card [card number redacted] / Rs 12,900\n\nI won't transcribe the full card number, the full account number, or guess at any text hidden behind the black boxes. If you need help understanding the non-sensitive structure of the statement, I can help with that.",
+    "error": null
+  },
+  {
+    "name": "styled-clinic",
+    "text": "Clinic letter — Meera Clinic\nPatient:\nDOB: 14-02-1988\nPhone: - 7\nGovt ID:\nNote: ay\nn",
+    "error": null
+  },
+  {
+    "name": "styled-order",
+    "text": "Order page — order\nconfirmed\n\nThanks !\n\nOrde s to\n\nContac\n\nConfirmed Shipped De\n\nTrack Order\nContinue Shopping",
+    "error": null
+  },
+  {
+    "name": "styled-photo",
+    "text": "Team photo\nft) at the offsite.",
+    "error": null
+  },
+  {
+    "name": "styled-ticket",
+    "text": "Support ticket #4821\nFrom: o le.in>\nPhone: 34\nOrder: 2\nMy card was charged twice.",
+    "error": null
+  }
+]

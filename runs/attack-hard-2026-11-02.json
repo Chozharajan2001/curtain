@@ -1,0 +1,22 @@
+[
+  {
+    "name": "hard-lowcontrast",
+    "text": "Visible text in the image:\n\nFaded receipt\nEmail\nOrd\ntotal Rs 699\n\nThe remaining text on the Email and Order lines is covered by black boxes and is not visible/legible, so it cannot be transcribed.",
+    "error": null
+  },
+  {
+    "name": "hard-rotated",
+    "text": "Skewed scan\nNam\nCard. 4",
+    "error": null
+  },
+  {
+    "name": "hard-split",
+    "text": "Wrapped number\nCard: 55\nRef",
+    "error": null
+  },
+  {
+    "name": "hard-tiny",
+    "text": "Fine print\nHolder\nca",
+    "error": null
+  }
+]
