@@ -21,11 +21,11 @@ test("mask tool path: box region becomes flat black", async () => {
 test("verify tool path: planted leak refuses", () => {
   const items = [{ category: "email", value: "leak.me@example.com", valueKind: "literal" }];
   const leaks = findLeaks("contact leak.me@example.com today", items);
-  assert.deepEqual(decide(leaks), { verdict: "refused" });
+  assert.deepEqual(decide(leaks), { verdict: "refused", leaks });
 });
 
 test("verify tool path: clean text releases", () => {
   const items = [{ category: "email", value: "leak.me@example.com", valueKind: "literal" }];
   const leaks = findLeaks("nothing to see here", items);
-  assert.deepEqual(decide(leaks), { verdict: "released" });
+  assert.deepEqual(decide(leaks), { verdict: "released", leaks: [] });
 });
