@@ -9,6 +9,8 @@ import { decide } from "../../../../src/decide.mjs";
 export async function POST(req: NextRequest) {
   const { imageBase64, boxes, secrets } = await req.json();
   if (!imageBase64) return NextResponse.json({ verdict: "refused", reason: "no image" }, { status: 400 });
+  if (!process.env.BASETEN_API_KEY || !process.env.BASETEN_BASE_URL)
+    return NextResponse.json({ verdict: "refused", reason: "server missing BASETEN_API_KEY/BASETEN_BASE_URL" }, { status: 503 });
   const input = Buffer.from(imageBase64, "base64");
   const entries = (boxes ?? []).map((b: { box?: { x: number; y: number; w: number; h: number }; margin?: number }) =>
     b.box ? { box: b.box, margin: b.margin ?? 16 } : { box: b, margin: 16 }
