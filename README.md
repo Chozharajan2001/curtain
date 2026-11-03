@@ -1,8 +1,9 @@
 # Curtain — privacy gate that proves itself
 
 Mask personal data in images, then have a second model try to read it.
-Every number below carries an evidence id from `hive/EVIDENCE.md`
-(repo root). No id, no number.
+Every number below has an id like E7. Each id is defined in `EVIDENCE.md`
+(same folder): what it measures, in plain words, plus the exact command
+that prints it. Run the command, compare your output to the value.
 
 ## The pipeline
 
@@ -76,8 +77,9 @@ The key is content-hashed. If `corpus/key/*.json` changes legitimately:
 node -e "import('./src/manifest.mjs').then(m=>console.log(m.writeManifest('corpus/key/v1.json','corpus/key/manifest.json')))"
 ```
 
-Key JSON files are read-only by repo rule — re-pinning needs explicit
-approval (see `hive/RISKS.md` R29 for the one exception granted).
+Key JSON files are never edited by hand. If a key legitimately changes,
+its checksum file is regenerated with the command above, once, with a
+commit message saying why. The key contents themselves are never touched.
 
 ## Limits
 
