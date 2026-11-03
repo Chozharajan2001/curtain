@@ -20,11 +20,33 @@ pre.reply{background:#f8f8f8;border:1px solid #ddd;padding:8px;font-size:12px;wh
 <p class="sub">Left: original. Right: masked + flattened + metadata stripped. Red items are what the attacker recovered from the masked image. Verdict on top. No server — this file works from disk.</p>
 <p class="sub">Pixel check (E3): 3/5 images fully flat; ticket email + clinic note peek through at the pixel level — but the attacker recovered neither (E5). Pixel survival is not a leak.</p>
 <p class="sub" id="stamp"></p>
-<div id="r"></div>
+<div id="r"><div class="card"><span class="badge released">RELEASED</span> <b>bank</b> <span class="meta">located 4 boxes · attacker reply 81 chars</span><div class="imgs"><figure><img src="img/bank-orig.png" alt="bank original"><figcaption>original</figcaption></figure><figure><img src="img/bank-masked.png" alt="bank masked"><figcaption>masked</figcaption></figure></div><div class="clean">leaks: none recovered</div><pre class="reply">attacker says: Bank statement — Jan 2026
+Holde
+Account:
+01-03 UPI Rs 4,200
+02-15 Rs 12,900
+Branc</pre></div>
+<div class="card"><span class="badge released">RELEASED</span> <b>clinic</b> <span class="meta">located 5 boxes · attacker reply 71 chars</span><div class="imgs"><figure><img src="img/clinic-orig.png" alt="clinic original"><figcaption>original</figcaption></figure><figure><img src="img/clinic-masked.png" alt="clinic masked"><figcaption>masked</figcaption></figure></div><div class="clean">leaks: none recovered</div><pre class="reply">attacker says: Clinic letter — Meera Clinic
+Patien OB 14-02-1988
+Phone
+Govt ID
+Note ay</pre></div>
+<div class="card"><span class="badge released">RELEASED</span> <b>order</b> <span class="meta">located 5 boxes · attacker reply 54 chars</span><div class="imgs"><figure><img src="img/order-orig.png" alt="order original"><figcaption>original</figcaption></figure><figure><img src="img/order-masked.png" alt="order masked"><figcaption>masked</figcaption></figure></div><div class="clean">leaks: none recovered</div><pre class="reply">attacker says: Order page — order confirmed
+Thank
+Orde hips to
+Contac</pre></div>
+<div class="card"><span class="badge released">RELEASED</span> <b>photo</b> <span class="meta">located 3 boxes · attacker reply 30 chars</span><div class="imgs"><figure><img src="img/photo-orig.png" alt="photo original"><figcaption>original</figcaption></figure><figure><img src="img/photo-masked.png" alt="photo masked"><figcaption>masked</figcaption></figure></div><div class="clean">leaks: none recovered</div><pre class="reply">attacker says: Team photo
+t the offsite.
+Logo</pre></div>
+<div class="card"><span class="badge released">RELEASED</span> <b>ticket</b> <span class="meta">located 5 boxes · attacker reply 63 chars</span><div class="imgs"><figure><img src="img/ticket-orig.png" alt="ticket original"><figcaption>original</figcaption></figure><figure><img src="img/ticket-masked.png" alt="ticket masked"><figcaption>masked</figcaption></figure></div><div class="clean">leaks: none recovered</div><pre class="reply">attacker says: Support ticket #4821
+From n&gt;
+Phon
+Orde
+My car as charged twice.</pre></div></div>
 <script>
 // Pinned runs inlined by scripts/build-screen.mjs. No fetch, no server.
 const cards = [{"name":"bank","verdict":"released","leaks":[],"located":4,"reply":"Bank statement — Jan 2026\nHolde\nAccount:\n01-03 UPI Rs 4,200\n02-15 Rs 12,900\nBranc","refusal":false},{"name":"clinic","verdict":"released","leaks":[],"located":5,"reply":"Clinic letter — Meera Clinic\nPatien OB 14-02-1988\nPhone\nGovt ID\nNote ay","refusal":false},{"name":"order","verdict":"released","leaks":[],"located":5,"reply":"Order page — order confirmed\nThank\nOrde hips to\nContac","refusal":false},{"name":"photo","verdict":"released","leaks":[],"located":3,"reply":"Team photo\nt the offsite.\nLogo","refusal":false},{"name":"ticket","verdict":"released","leaks":[],"located":5,"reply":"Support ticket #4821\nFrom n>\nPhon\nOrde\nMy car as charged twice.","refusal":false}];
-const stamp = {"locateRun":"runs/locate-2026-10-30-run3.json","attackRun":"runs/attack-2026-10-31.json","built":"2026-11-01","recall":"0.909 (20/22) run3 · every-run 0.727 (16/22) · median 0.864"};
+const stamp = {"locateRun":"runs/locate-2026-10-30-run3.json","attackRun":"runs/attack-2026-10-31.json","built":"2026-11-03","recall":"0.909 (20/22) run3 · every-run 0.727 (16/22) · median 0.864"};
 document.getElementById("stamp").textContent =
   `Locate ${stamp.locateRun} · attack ${stamp.attackRun} · built ${stamp.built} · recall ${stamp.recall}. Trust the every-run number, not the best run.`;
 const d = document.getElementById("r");
