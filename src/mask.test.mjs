@@ -26,6 +26,21 @@ test("expandBox grows by margin and clamps to image", () => {
   });
 });
 
+test("expandBox rightBias extends right edge only, clamped", () => {
+  assert.deepEqual(expandBox({ x: 100, y: 100, w: 50, h: 20 }, 1000, 800, 16, 24), {
+    x: 84,
+    y: 84,
+    w: 106,
+    h: 52,
+  });
+  assert.deepEqual(expandBox({ x: 950, y: 100, w: 50, h: 20 }, 1000, 800, 16, 100), {
+    x: 934,
+    y: 84,
+    w: 66,
+    h: 52,
+  });
+});
+
 test("maskImage paints every box solid and strips metadata", async () => {
   // White 100x100 with a fake card number smuggled into real EXIF.
   const input = await sharp({

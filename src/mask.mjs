@@ -7,13 +7,13 @@ import sharp from "sharp";
 export const MARGIN = 16;
 export const FILL = { r: 0, g: 0, b: 0 };
 
-export function expandBox(box, imgW, imgH, margin = MARGIN) {
+export function expandBox(box, imgW, imgH, margin = MARGIN, rightBias = 0) {
   const x = Math.max(box.x - margin, 0);
   const y = Math.max(box.y - margin, 0);
   return {
     x,
     y,
-    w: Math.min(box.x + box.w + margin, imgW) - x,
+    w: Math.min(box.x + box.w + margin + rightBias, imgW) - x,
     h: Math.min(box.y + box.h + margin, imgH) - y,
   };
 }
@@ -23,11 +23,12 @@ export async function maskImage(input, boxes, margin = MARGIN) {
   const meta = await base.metadata();
   const imgW = meta.width;
   const imgH = meta.height;
-  // Each entry is a box or {box, margin}. SAM-tight boxes carry margin 4.
+  // Each entry is a box or {box, margin, rightBias}. SAM-tight boxes carry margin 4.
   const fills = boxes.map((entry) => {
     const b = entry.box ? entry.box : entry;
     const m = entry.box ? (entry.margin ?? margin) : margin;
-    const e = expandBox(b, imgW, imgH, m);
+    const rb = entry.box ? (entry.rightBias ?? 0) : 0;
+    const e = expandBox(b, imgW, imgH, m, rb);
     return {
       input: {
         create: { width: e.w, height: e.h, channels: 3, background: FILL },

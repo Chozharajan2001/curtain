@@ -24,7 +24,7 @@ export function buildPrompt(imgW, imgH) {
     `category must be exactly one of: ${CATEGORIES.join(", ")}.`,
     `The image is exactly ${imgW} pixels wide and ${imgH} pixels tall.`,
     "box x,y,w,h are PIXELS in that image. x,y is the top-left corner of the text.",
-    "Measure each box tightly around the exact characters or object edges. No padding, no whole-line boxes.",
+    "Measure each box around the full line height of the text (include ascenders and descenders) plus 2-4 pixels of padding on every side. Loose boxes are correct; clipped boxes are wrong.",
     "Place every box on the actual ink. Do not estimate positions by counting lines from the top.",
     'Include every face, name, phone, email, address, account or order number, payment card, government ID, handwritten note, signature and company logo you can see. If there are none, return {"boxes":[]}.',
   ].join("\n");

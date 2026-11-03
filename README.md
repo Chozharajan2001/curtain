@@ -26,7 +26,7 @@ and they refuse to run on a tampered key (exit 2) or an empty run (exit 1).
 | `npm run variance` | 3 runs: 0.864/0.909/0.773, every-run 0.727 | E7 |
 | `node scripts/score-sam.mjs runs/sam-2026-10-31.json` | placement 1/1, refusal 4/4 | E4 |
 | `node scripts/score-attack.mjs runs/attack-2026-10-31.json` | 0/22 leaks | E5 |
-| `npm run cost` | $0.6981 over 73 calls | E9 |
+| `npm run cost` | $1.0321 over 97 calls | E9 |
 | `npm run verify:corpus` | one-line summary, exits 1 (mask 3/5 honest) | E6 |
 
 Styled set (second synthetic corpus, 22 items):
