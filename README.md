@@ -17,6 +17,72 @@ attack ──score──▶ leaks + verdict (released|refused)
 Product code never reads `corpus/key/` (enforced by test). Only scorers do,
 and they refuse to run on a tampered key (exit 2) or an empty run (exit 1).
 
+## System map
+
+Top to bottom: image in, verdict out.
+
+```mermaid
+flowchart TD
+  subgraph CORPUS["1. CORPUS - test images + answer key"]
+    HTML["HTML fakes<br/>scripts/build-corpus.mjs"]
+    PLAY["Playwright screenshot<br/>crop to content"]
+    IMG["corpus/img/*.png<br/>ticket clinic bank order photo"]
+    KEY["corpus/key/v1.json<br/>22 secrets + true boxes"]
+    MAN["manifest.json<br/>SHA256 hash of key"]
+    HTML --> PLAY --> IMG
+    KEY --- MAN
+  end
+  subgraph LOCATE["2. LOCATE - find secrets"]
+    SET["runs/locate-set-v1.json"]
+    RUNLOC["scripts/locate.mjs<br/>resize + EXIF strip"]
+    SRCLOC["src/locate.mjs<br/>prompt + parseBoxes"]
+    HTTP1["src/http.mjs<br/>retry + timeout"]
+    META1["Meta API<br/>muse-spark-1.3"]
+    OUTLOC["corpus/out/locate.json"]
+    PINLOC["runs/locate-*.json<br/>frozen pins"]
+    SET --> RUNLOC --> SRCLOC --> HTTP1 --> META1
+    META1 --> OUTLOC --> PINLOC
+  end
+  subgraph SAM["3. SAM - tighten objects"]
+    SRCSAM["src/sam.mjs<br/>parseSamBox + envelope proof"]
+    META2["Meta API<br/>SAM 3.1"]
+    PINSAM["runs/sam-2026-10-31.json<br/>face 1/1 + 4 refusals"]
+    SRCSAM --> META2 --> PINSAM
+  end
+  subgraph MASK["4. MASK - cover with black"]
+    RUNMASK["scripts/mask-images.mjs<br/>merge locate + SAM"]
+    SRCMASK["src/mask.mjs<br/>expandBox + maskImage"]
+    OUTMASK["corpus/out/masked/*.png"]
+    CHECK["scripts/mask-check.mjs<br/>variance = 0 ? pass"]
+    RUNMASK --> SRCMASK --> OUTMASK --> CHECK
+  end
+  subgraph ATTACK["5. ATTACK - second model reads"]
+    SRCATK["src/attack.mjs"]
+    BASE["Baseten<br/>muse-spark-open-1026"]
+    OUTATK["corpus/out/attack.json"]
+    PINATK["runs/attack-*.json<br/>frozen pins"]
+    SRCATK --> BASE --> OUTATK --> PINATK
+  end
+  subgraph DECIDE["6. DECIDE - release or refuse"]
+    LEAKS["src/leaks.mjs<br/>findLeaks"]
+    DEC["src/decide.mjs<br/>empty = released"]
+    SCOREATK["scripts/score-attack.mjs<br/>exit 1 on leak"]
+    LEAKS --> DEC --> SCOREATK
+  end
+  subgraph DOORS["7. DOORS - how the world uses it"]
+    MCP["mcp/server.mjs<br/>inspect / mask / verify"]
+    WEB["web/app<br/>/ cards + /verify upload"]
+    PREV["preview/index.html<br/>5 cards, file:// clean"]
+  end
+  IMG --> RUNLOC
+  IMG --> RUNMASK
+  PINLOC --> RUNMASK
+  PINSAM --> RUNMASK
+  OUTMASK --> SRCATK
+  PINATK --> SCOREATK
+  KEY --> SCOREATK
+```
+
 ## Zero-spend commands (judge path, no API keys)
 
 | Command | Prints | Evidence |
