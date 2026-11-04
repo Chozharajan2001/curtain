@@ -87,7 +87,7 @@ flowchart TD
 
 | Command | Prints | Evidence |
 |---|---|---|
-| `npm run verify` | 71 checks, exit 0 | test suite |
+| `npm run verify` | 74 checks, exit 0 | test suite |
 | `npm run count:planted` | 22 items, 5 images | E1 |
 | `npm run score` | recall 0.909 (20/22) | E2 |
 | `npm run variance` | 3 runs: 0.864/0.909/0.773, every-run 0.727 | E7 |

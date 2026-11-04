@@ -59,6 +59,11 @@ Show LIMITATIONS.md open.
 > Five released, zero leaked, every failure named with its number. Curtain
 > does not claim perfect. It claims proven."
 
+Note: the recording says seventy-one. That was the true count when the
+take was made; three pricing fail-closed tests were added after it. The
+current count printed by `npm run verify` is 74. The audio is not
+re-recorded, so the video keeps the older number.
+
 ## Commands used (in order)
 
 ```

@@ -1,5 +1,5 @@
 // POST /api/verify — in-memory mask → attack → decide chain.
-// Body: { imageBase64, boxes, secrets }. Never touches corpus/key/.
+// Body: { imageBase64, boxes, secrets }. Never reads the answer key.
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { maskImage } from "../../../../src/mask.mjs";
