@@ -47,6 +47,15 @@ Same masks, product margin 16: 0/5 styled images pass pixel-uniformity. The mode
 
 Even with the weaker mask (margin 16), Muse Spark Open recovered 0 of 22 planted values. On bank and clinic it refused outright ("I can't provide a verbatim transcription of personal financial details... fragments appear at the edges of the redactions") — the same safety-as-capability signal as E5b.
 
+## 5e. The live attack service flaked twice (E18)
+
+Two live probes, two sessions, same result: Baseten returned an empty reply.
+Both doors refused correctly with 0 leaks — the transcripts are pinned. But
+"empty" is undiagnosed: rate-limit, cold start, payload size, or endpoint
+flake are all unruled out. A live demo that hits this shows a refusal with
+reason `attacker-error: empty-reply`, not a read-back. Diagnose with a timed
+probe (status + headers + latency, ≤3 attempts) before filming any live shot.
+
 ## 6. Out of scope by design (SPEC)
 
 PDF text layers, video, multi-user accounts, auth, database, local models, fine-tuning, throughput. Unplanted template text (e.g. clinic DOB read by the attacker) is outside the 11 SPEC categories — the key scores planted secrets only.
