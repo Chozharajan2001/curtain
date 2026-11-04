@@ -37,7 +37,7 @@ Five styled renders (realistic UI, colours, tables, logos) score locate recall 0
 
 ## 5b. Synthetic data flatters recall (S12, open)
 
-Crisp HTML text at fixed sizes is easier than real photos. The styled renders above already widen the gap. Real phone photos (pending) will widen it further — renders are not photographs (D28). Rotated/tiny/low-contrast/split synthetics are built and pending a scored run.
+Crisp HTML text at fixed sizes is easier than real photos. The styled renders above already widen the gap. Real phone photos (pending) will widen it further — renders are not photographs (D28). Rotated/tiny/low-contrast/split synthetics scored E14 (locate 0.200) + E15 (mask 1/4, attacker 0/10 leaks).
 
 ## 5c. Styled renders break the mask at product margin (E12)
 

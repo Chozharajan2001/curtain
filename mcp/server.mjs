@@ -52,16 +52,20 @@ server.registerTool(
   async ({ imageBase64 }) => {
     if (!env("META_API_KEY", ""))
       return { content: [{ type: "text", text: JSON.stringify({ error: "server missing META_API_KEY", boxes: [] }) }], isError: true };
-    const input = Buffer.from(imageBase64, "base64");
-    const { dataUrl, imgW, imgH } = await toSendable(input);
-    const r = await locate({
-      dataUrl, imgW, imgH,
-      apiKey: env("META_API_KEY", ""),
-      baseUrl: env("META_BASE_URL", "https://api.meta.ai/v1"),
-      model: env("META_MODEL", "muse-spark-1.3"),
-    });
-    appendUsage(join(root, "usage.jsonl"), usageRecord({ model: env("META_MODEL", "muse-spark-1.3"), usage: r.usage, tag: "mcp:inspect" }));
-    return { content: [{ type: "text", text: JSON.stringify({ w: imgW, h: imgH, boxes: r.boxes, dropped: r.dropped, error: r.error ?? null }) }] };
+    try {
+      const input = Buffer.from(imageBase64, "base64");
+      const { dataUrl, imgW, imgH } = await toSendable(input);
+      const r = await locate({
+        dataUrl, imgW, imgH,
+        apiKey: env("META_API_KEY", ""),
+        baseUrl: env("META_BASE_URL", "https://api.meta.ai/v1"),
+        model: env("META_MODEL", "muse-spark-1.3"),
+      });
+      appendUsage(join(root, "usage.jsonl"), usageRecord({ model: env("META_MODEL", "muse-spark-1.3"), usage: r.usage, tag: "mcp:inspect" }));
+      return { content: [{ type: "text", text: JSON.stringify({ w: imgW, h: imgH, boxes: r.boxes, dropped: r.dropped, error: r.error ?? null }) }] };
+    } catch (e) {
+      return { content: [{ type: "text", text: JSON.stringify({ error: String(e?.message ?? e), boxes: [] }) }], isError: true };
+    }
   }
 );
 
@@ -75,10 +79,14 @@ server.registerTool(
     },
   },
   async ({ imageBase64, boxes }) => {
-    const input = Buffer.from(imageBase64, "base64");
-    const entries = (boxes ?? []).map((b) => (b.box ? { box: b.box, margin: b.margin ?? 16 } : { box: b, margin: 16 }));
-    const out = await maskImage(input, entries);
-    return { content: [{ type: "text", text: JSON.stringify({ maskedBase64: out.toString("base64"), boxes: entries.length }) }] };
+    try {
+      const input = Buffer.from(imageBase64, "base64");
+      const entries = (boxes ?? []).map((b) => (b.box ? { box: b.box, margin: b.margin ?? 16 } : { box: b, margin: 16 }));
+      const out = await maskImage(input, entries);
+      return { content: [{ type: "text", text: JSON.stringify({ maskedBase64: out.toString("base64"), boxes: entries.length }) }] };
+    } catch (e) {
+      return { content: [{ type: "text", text: JSON.stringify({ error: String(e?.message ?? e) }) }], isError: true };
+    }
   }
 );
 
@@ -95,22 +103,26 @@ server.registerTool(
   async ({ imageBase64, boxes, secrets }) => {
     if (!env("BASETEN_API_KEY", "") || !env("BASETEN_BASE_URL", ""))
       return { content: [{ type: "text", text: JSON.stringify({ verdict: "refused", reason: "server missing BASETEN_API_KEY/BASETEN_BASE_URL", leaks: [] }) }], isError: true };
-    const input = Buffer.from(imageBase64, "base64");
-    const entries = (boxes ?? []).map((b) => (b.box ? { box: b.box, margin: b.margin ?? 16 } : { box: b, margin: 16 }));
-    const masked = await maskImage(input, entries);
-    const { dataUrl, imgW, imgH } = await toSendable(masked);
-    const r = await attack({
-      dataUrl,
-      apiKey: env("BASETEN_API_KEY", ""),
-      baseUrl: env("BASETEN_BASE_URL", ""),
-      model: env("BASETEN_MODEL", "meta-models/muse-spark-open-1026"),
-    });
-    appendUsage(join(root, "usage.jsonl"), usageRecord({ model: env("BASETEN_MODEL", "meta-models/muse-spark-open-1026"), usage: r.usage, tag: "mcp:verify" }));
-    if (r.error) return { content: [{ type: "text", text: JSON.stringify({ verdict: "refused", reason: `attacker-error: ${r.error}`, leaks: [] }) }] };
-    const items = (secrets ?? []).map((s) => ({ category: s.category, value: s.value, valueKind: "literal" }));
-    const leaks = findLeaks(r.text ?? "", items);
-    const { verdict } = decide(leaks);
-    return { content: [{ type: "text", text: JSON.stringify({ verdict, leaks, replyChars: (r.text ?? "").length, imgW, imgH }) }] };
+    try {
+      const input = Buffer.from(imageBase64, "base64");
+      const entries = (boxes ?? []).map((b) => (b.box ? { box: b.box, margin: b.margin ?? 16 } : { box: b, margin: 16 }));
+      const masked = await maskImage(input, entries);
+      const { dataUrl, imgW, imgH } = await toSendable(masked);
+      const r = await attack({
+        dataUrl,
+        apiKey: env("BASETEN_API_KEY", ""),
+        baseUrl: env("BASETEN_BASE_URL", ""),
+        model: env("BASETEN_MODEL", "meta-models/muse-spark-open-1026"),
+      });
+      appendUsage(join(root, "usage.jsonl"), usageRecord({ model: env("BASETEN_MODEL", "meta-models/muse-spark-open-1026"), usage: r.usage, tag: "mcp:verify" }));
+      if (r.error) return { content: [{ type: "text", text: JSON.stringify({ verdict: "refused", reason: `attacker-error: ${r.error}`, leaks: [] }) }] };
+      const items = (secrets ?? []).map((s) => ({ category: s.category, value: s.value, valueKind: "literal" }));
+      const leaks = findLeaks(r.text ?? "", items);
+      const { verdict } = decide(leaks);
+      return { content: [{ type: "text", text: JSON.stringify({ verdict, leaks, replyChars: (r.text ?? "").length, imgW, imgH }) }] };
+    } catch (e) {
+      return { content: [{ type: "text", text: JSON.stringify({ verdict: "refused", reason: `handler-error: ${String(e?.message ?? e)}`, leaks: [] }) }], isError: true };
+    }
   }
 );
 

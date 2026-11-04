@@ -21,13 +21,13 @@ and they refuse to run on a tampered key (exit 2) or an empty run (exit 1).
 
 | Command | Prints | Evidence |
 |---|---|---|
-| `npm run verify` | 63 checks, exit 0 | test suite |
+| `npm run verify` | 70 checks, exit 0 | test suite |
 | `npm run count:planted` | 22 items, 5 images | E1 |
 | `npm run score` | recall 0.909 (20/22) | E2 |
 | `npm run variance` | 3 runs: 0.864/0.909/0.773, every-run 0.727 | E7 |
 | `node scripts/score-sam.mjs runs/sam-2026-10-31.json` | placement 1/1, refusal 4/4 | E4 |
 | `node scripts/score-attack.mjs runs/attack-2026-10-31.json` | 0/22 leaks | E5 |
-| `npm run cost` | $1.0321 over 97 calls | E9 |
+| `npm run cost` | $1.17 over 98 calls | E9 |
 | `npm run verify:corpus` | one-line summary, exits 1 (mask 3/5 honest) | E6 |
 
 Styled set (second synthetic corpus, 22 items):
@@ -46,10 +46,15 @@ Hard set (4 images, 10 items):
 
 ## Doors onto the engine
 
+Pick your path. No keys: run the zero-spend commands above — every number
+reproduces from pinned files. Human trying it live: open the Next.js screen.
+Agent calling it in a pipeline: use the MCP server.
+
 - **MCP server** (`mcp/`, stdio): `inspect` / `mask` / `verify` tools for any
   agent. See `mcp/README.md`. Run: `npm run mcp` (needs env keys).
 - **Next.js screen** (`web/`): `/` shows the 5 pinned cards, `/verify` runs a
-  live mask→attack→decide on your upload. Run: `cd web && npm install && npm run dev`.
+  live attack→decide demo on your upload (mask-noop; full mask→attack→decide
+  via MCP `verify` or API with boxes). Run: `cd web && npm install && npm run dev`.
 - **Static fallback** (`preview/index.html`): frozen, works from `file://`.
 
 ## Live commands (spend credit, need `.env`)
