@@ -36,5 +36,6 @@
     "@modelcontextprotocol/server": "^2.4.0",
     "sharp": "^0.35.5",
     "zod": "^4.6.7"
-  }
+  },
+  "license": "MIT"
 }

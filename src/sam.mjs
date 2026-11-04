@@ -23,7 +23,7 @@ export function parseSamBox(text) {
   return { box: { x: x1, y: y1, w: x2 - x1, h: y2 - y1 }, error: null };
 }
 
-export async function samLocate({ dataUrl, concept, apiKey, baseUrl, fetchImpl, sleep, now, maxAttempts }) {
+export async function samLocate({ dataUrl, concept, apiKey, baseUrl, fetchImpl, sleep, now, maxAttempts, timeoutMs }) {
   const body = {
     model: SAM_MODEL,
     input: [
@@ -43,6 +43,7 @@ export async function samLocate({ dataUrl, concept, apiKey, baseUrl, fetchImpl, 
     sleep,
     now,
     maxAttempts,
+    timeoutMs,
   });
   const out0 = r.json?.output?.[0];
   const content = out0?.content ?? [];

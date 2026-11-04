@@ -1,9 +1,10 @@
 // S6 runner: one SAM concept per image that has it. Face->photo, card->ticket+bank,
 // sig->clinic, logo->photo. Writes corpus/out/sam.json. Needs META_API_KEY.
 // Never reads the key (D7): concepts are hardcoded per image.
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, readdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import sharp from "sharp";
 import { samLocate, SAM_CONCEPTS } from "../src/sam.mjs";
 import { toDataUrl } from "../src/locate.mjs";
 import { appendUsage, usageRecord } from "../src/usage.mjs";
@@ -33,8 +34,15 @@ mkdirSync(outDir, { recursive: true });
 const results = [];
 let failed = 0;
 for (const [name, kind] of PLAN) {
-  const bytes = readFileSync(join(root, "corpus/img", `${name}.png`));
-  const size = { w: bytes.readUInt32BE(16), h: bytes.readUInt32BE(20) };
+  const imgFile = readdirSync(join(root, "corpus/img")).find((n) => n.startsWith(name + "."));
+  if (!imgFile) {
+    console.log(`${name}/${kind}: error=no-such-image`);
+    failed++;
+    continue;
+  }
+  const bytes = readFileSync(join(root, "corpus/img", imgFile));
+  const meta = await sharp(bytes).metadata();
+  const size = { w: meta.width, h: meta.height };
   const t0 = Date.now();
   try {
     const r = await samLocate({

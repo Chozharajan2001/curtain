@@ -16,7 +16,7 @@ in plain words, run its command, compare your output to the value.
 | E1 | How many secrets are hidden in the 5 test images | 22 | `npm run count:planted` |
 | E2 | How many secrets the finder covers (best saved run). "Covers" means the found box overlaps at least half the secret | 0.909 — 20 of 22 | `node scripts/score-locate.mjs runs/locate-2026-10-30-run3.json` |
 | E2b | Same run, stricter ruler: boxes must overlap closely, not just cover. Always lower — shown so nothing is hidden | 0.636 — 14 of 22 | Same command as E2 (second line) |
-| E2c | Stability across 2 runs: found in *every* run vs found in *at least one* | Every run 18/22, either run 21/22 | `node scripts/compare-runs.mjs` |
+| E2c | Stability across the 2-run set (run2+run3): found in *every* run vs found in *at least one*. The 3-run every-run 16/22 is in the run table below | Every run 18/22, either run 21/22 | `node scripts/compare-runs.mjs` |
 | E3 | How many images are fully black where secrets were. 2 images leak pixels (finder boxes too narrow) | 3 of 5 pass | `npm run mask-images && npm run mask:check` |
 | E4 | Face test: did the object finder land on the face, and did it correctly say "nothing here" for text items | Face found, 4 correct refusals | `node scripts/score-sam.mjs runs/sam-2026-10-31.json` |
 | E5 | How many secrets the attacker reads from the blacked-out images | 0 of 22 (fragments only) | `node scripts/score-attack.mjs runs/attack-2026-10-31.json` |

@@ -39,7 +39,7 @@ test("key values are scorable: valid kind, sentinel shape, no dup literal", () =
 function walk(dir, out = []) {
   for (const n of readdirSync(dir)) {
     const p = join(dir, n);
-    if (n === "node_modules" || n === ".git") continue;
+    if (n === "node_modules" || n === ".git" || n === ".next") continue;
     const st = statSync(p);
     if (st.isDirectory()) walk(p, out);
     else if (p.endsWith(".mjs") || p.endsWith(".ts") || p.endsWith(".tsx")) {
@@ -54,7 +54,8 @@ test("no product import reads corpus/key", () => {
   // build-corpus.mjs writes the key; count-planted.mjs, score-locate.mjs,
   // compare-runs.mjs, mask-check.mjs, score-sam.mjs, score-attack.mjs,
   // build-screen.mjs and variance.mjs score against it; overlay.mjs draws it
-  // for a human; manifest.mjs owns the hash paths. None is product code.
+  // for a human; manifest.mjs owns the hash paths; web/app/lib/cards.ts
+  // renders pinned cards server-side (scorer-side, allowlisted). None is product code.
   const allowed = new Set([
     "scripts/build-corpus.mjs",
     "scripts/count-planted.mjs",
@@ -72,8 +73,9 @@ test("no product import reads corpus/key", () => {
     "scripts/overlay.mjs",
     "scripts/probe-pixels.mjs",
     "src/manifest.mjs",
+    "web/app/lib/cards.ts",
   ]);
-  for (const f of walk("src").concat(walk("scripts"))) {
+  for (const f of walk("src").concat(walk("scripts"), walk("web/app"), walk("mcp"))) {
     if (allowed.has(f.replace(/\\/g, "/"))) continue;
     const code = readFileSync(f, "utf8");
     assert.ok(!code.includes("corpus/key"), `${f} must not read the key`);

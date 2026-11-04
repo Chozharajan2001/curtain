@@ -65,6 +65,32 @@ test("400 is not retried", async () => {
   assert.equal(n, 1);
 });
 
+test("timeout aborts a hanging fetch with a named error", async () => {
+  const fetchImpl = (url, { signal } = {}) =>
+    new Promise((_, reject) => {
+      signal?.addEventListener("abort", () => {
+        const e = new Error("The operation was aborted");
+        e.name = "TimeoutError";
+        reject(e);
+      });
+    });
+  await assert.rejects(
+    () => postJson("http://x", { body: {}, fetchImpl, sleep: noSleep, now: () => 1e6, timeoutMs: 20, maxAttempts: 1 }),
+    (e) => e.timeout === true && /http timeout after 20ms/.test(e.message)
+  );
+});
+
+test("timeoutMs 0 disables the signal", async () => {
+  let sawSignal;
+  const fetchImpl = async (url, opts = {}) => {
+    sawSignal = "signal" in opts;
+    return res(200, { ok: 1 });
+  };
+  const r = await postJson("http://x", { body: {}, fetchImpl, sleep: noSleep, now: () => 1e6, timeoutMs: 0 });
+  assert.equal(r.json.ok, 1);
+  assert.equal(sawSignal, false);
+});
+
 test("rate cap waits between calls", async () => {
   const waits = [];
   const sleep = async (ms) => waits.push(ms);

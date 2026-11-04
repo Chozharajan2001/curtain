@@ -84,6 +84,7 @@ export async function locate({
   sleep,
   now,
   maxAttempts,
+  timeoutMs,
 }) {
   const body = {
     model,
@@ -106,6 +107,7 @@ export async function locate({
     sleep,
     now,
     maxAttempts,
+    timeoutMs,
   });
 
   const content = r.json?.choices?.[0]?.message?.content ?? "";
