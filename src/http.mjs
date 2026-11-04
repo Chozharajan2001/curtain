@@ -16,7 +16,9 @@ export async function postJson(url, opts = {}) {
     now = Date.now,
     maxAttempts = 5,
     minIntervalMs = 400,
+    timeoutMs = 90000,
   } = opts;
+  const signal = typeof timeoutMs === "number" && timeoutMs > 0 ? AbortSignal.timeout(timeoutMs) : undefined;
 
   let attempts = 0;
   for (;;) {
@@ -33,8 +35,16 @@ export async function postJson(url, opts = {}) {
         method: "POST",
         headers: { "content-type": "application/json", ...headers },
         body: JSON.stringify(body),
+        ...(signal ? { signal } : {}),
       });
     } catch (e) {
+      if (e?.name === "TimeoutError" || e?.name === "AbortError") {
+        const err = new Error(`http timeout after ${timeoutMs}ms (${attempts + 1}/${maxAttempts})`);
+        err.timeout = true;
+        err.attempts = attempts + 1;
+        err.cause = e;
+        throw err;
+      }
       if (attempts >= maxAttempts) {
         const err = new Error(`http-fetch failed after ${attempts} attempt(s): ${e.message}`);
         err.attempts = attempts;

@@ -16,7 +16,7 @@ export function extractText(choice) {
   return "";
 }
 
-export async function attack({ dataUrl, apiKey, baseUrl, model, fetchImpl, sleep, now, maxAttempts }) {
+export async function attack({ dataUrl, apiKey, baseUrl, model, fetchImpl, sleep, now, maxAttempts, timeoutMs }) {
   const body = {
     model,
     temperature: 0,
@@ -37,6 +37,7 @@ export async function attack({ dataUrl, apiKey, baseUrl, model, fetchImpl, sleep
     sleep,
     now,
     maxAttempts,
+    timeoutMs,
   });
   const text = extractText(r.json?.choices?.[0]);
   if (!text.trim()) return { text: "", error: "empty-reply", usage: r.json?.usage ?? null, status: r.status };

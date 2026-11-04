@@ -4,7 +4,7 @@
 import { readFileSync, writeFileSync, mkdirSync, readdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { attack, ATTACK_PROMPT } from "../src/attack.mjs";
+import { attack } from "../src/attack.mjs";
 import { toDataUrl } from "../src/locate.mjs";
 import { appendUsage, usageRecord } from "../src/usage.mjs";
 
@@ -52,4 +52,3 @@ for (const name of names) {
 writeFileSync(join(outDir, "attack.json"), JSON.stringify(results, null, 2));
 console.log(`attack: ${results.length - failed}/${results.length} images ok`);
 process.exit(failed ? 1 : 0);
-void ATTACK_PROMPT;
