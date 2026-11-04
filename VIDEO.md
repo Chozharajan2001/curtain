@@ -55,7 +55,7 @@ Show the MCP config, then `/verify` returning REFUSED on a live image.
 Show LIMITATIONS.md open.
 
 > "Two doors: an MCP server any agent can call, and a web page you can try
-> now. Sixty-seven checks green, ninety-eight calls, one dollar seventeen.
+> now. Seventy-one checks green, ninety-eight calls, one dollar seventeen.
 > Five released, zero leaked, every failure named with its number. Curtain
 > does not claim perfect. It claims proven."
 
