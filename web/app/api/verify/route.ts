@@ -6,6 +6,7 @@ import { maskImage } from "../../../../src/mask.mjs";
 import { attack } from "../../../../src/attack.mjs";
 import { findLeaks } from "../../../../src/leaks.mjs";
 import { decide } from "../../../../src/decide.mjs";
+import { toSendable } from "../../../../src/sendable.mjs";
 
 const boxSchema = z.object({
   box: z.object({
@@ -34,9 +35,8 @@ export async function POST(req: NextRequest) {
     const input = Buffer.from(imageBase64, "base64");
     const entries = boxes.map((b) => ({ box: b.box, margin: b.margin ?? 16 }));
     const masked = await maskImage(input, entries);
-    const sharp = (await import("sharp")).default;
-    const meta = await sharp(masked).metadata();
-    const dataUrl = `data:image/png;base64,${masked.toString("base64")}`;
+    const { dataUrl, imgW, imgH } = await toSendable(masked);
+    const meta = { width: imgW, height: imgH };
     const r = await attack({
       dataUrl,
       apiKey: process.env.BASETEN_API_KEY ?? "",

@@ -10,6 +10,16 @@ test("extractText reads string and part-array content", () => {
   assert.equal(extractText({}), "");
 });
 
+test("extractText surfaces refusal parts instead of empty", () => {
+  const out = extractText({ message: { content: [{ type: "refusal", refusal: "can't transcribe PII" }] } });
+  assert.ok(out.includes("can't transcribe PII"), `refusal must surface, got: ${out}`);
+});
+
+test("extractText names non-text content instead of empty", () => {
+  const out = extractText({ message: { content: [{ type: "image_url" }] } });
+  assert.ok(out.includes("image_url"), `kind must be named, got: ${out}`);
+});
+
 test("findLeaks names planted literals, ignores sentinels", () => {
   const items = [
     { category: "email", value: "asha.rao@example.in", valueKind: "literal" },
