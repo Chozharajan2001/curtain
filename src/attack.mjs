@@ -12,7 +12,16 @@ export const ATTACK_PROMPT = [
 export function extractText(choice) {
   const c = choice?.message?.content;
   if (typeof c === "string") return c;
-  if (Array.isArray(c)) return c.map((p) => p.text ?? "").join("\n");
+  if (Array.isArray(c)) {
+    const texts = [];
+    for (const p of c) {
+      if (typeof p?.text === "string" && p.text) texts.push(p.text);
+      else if (typeof p?.refusal === "string" && p.refusal) texts.push(`refusal: ${p.refusal}`);
+    }
+    if (texts.length) return texts.join("\n");
+    const kinds = c.map((p) => p?.type ?? typeof p).join(",");
+    return kinds ? `[non-text content: ${kinds}]` : "";
+  }
   return "";
 }
 
