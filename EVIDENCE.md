@@ -50,6 +50,7 @@ Rotated, tiny, low-contrast, split numbers. Built to break the finder.
 | id | What it measures, in plain words | Value | Where |
 |---|---|---|---|
 | E18 | Both doors ran the full chain live with real keys. The attack service flaked (empty reply) twice — both doors refused anyway, 0 leaks | 2 transcripts, both refused | `runs/verify-live-mcp-2026-11-02.json`, `runs/verify-live-api-2026-11-02.json` |
+| E19 | Every test passes, including the scan that proves no product file names the answer-key path | 74 checks, 0 fail, exit 0 | `npm run verify` |
 
 ## What the finder misses (named, not hidden)
 
