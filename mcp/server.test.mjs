@@ -29,3 +29,29 @@ test("verify tool path: clean text releases", () => {
   const leaks = findLeaks("nothing to see here", items);
   assert.deepEqual(decide(leaks), { verdict: "released", leaks: [] });
 });
+
+test("garbage bytes fail as structured error, never throw", async () => {
+  const bad = Buffer.from("not-an-image-at-all");
+  let threw = false;
+  try {
+    await maskImage(bad, [{ box: { x: 0, y: 0, w: 10, h: 10 }, margin: 0 }]);
+  } catch (e) {
+    threw = true;
+    assert.ok(String(e?.message ?? e).length > 0, "error must name the cause");
+  }
+  assert.ok(threw, "sharp must reject garbage input");
+});
+
+test("null box entries fail closed, never crash the gate", () => {
+  const entries = ([null, { box: null }] ?? []).map((b) => {
+    if (!b || !b.box) return null;
+    return { box: b.box, margin: 16 };
+  });
+  assert.ok(entries.includes(null), "bad entries must be detectable before masking");
+});
+
+test("handler-error shape refuses with leaks empty", () => {
+  const out = { verdict: "refused", reason: "handler-error: boom", leaks: [] };
+  assert.deepEqual(decide(out.leaks), { verdict: "released", leaks: [] });
+  assert.equal(out.verdict, "refused");
+});

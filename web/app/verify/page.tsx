@@ -11,8 +11,12 @@ export default function VerifyPage() {
       setResult("pick an image first");
       return;
     }
-    const buf = await file.arrayBuffer();
-    const b64 = Buffer.from(buf).toString("base64");
+    const b64 = await new Promise<string>((resolve, reject) => {
+      const fr = new FileReader();
+      fr.onload = () => resolve(String(fr.result).split(",")[1] ?? "");
+      fr.onerror = () => reject(fr.error);
+      fr.readAsDataURL(file);
+    });
     const list = secrets
       .split("\n")
       .map((l) => l.trim())

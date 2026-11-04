@@ -24,7 +24,7 @@ Keys pass through env, never hardcoded, never logged.
 ```json
 {
   "mcpServers": {
-    "curtain": { "command": "node", "args": ["mcp/server.mjs"], "cwd": "D:/PROJECT_GIT/META_HACKATHON/PROJECT" }
+    "curtain": { "command": "node", "args": ["mcp/server.mjs"], "cwd": "<path-to>/curtain/PROJECT" }
   }
 }
 ```

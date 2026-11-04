@@ -28,7 +28,8 @@ const stamp = /*__STAMP__*/;
 document.getElementById("stamp").textContent =
   `Locate ${stamp.locateRun} · attack ${stamp.attackRun} · built ${stamp.built} · recall ${stamp.recall}. Trust the every-run number, not the best run.`;
 const d = document.getElementById("r");
-for (const it of cards) {
+if (d.querySelector(".card")) { /* pre-rendered at build time — JS is enhancement only */ }
+else for (const it of cards) {
   const c = document.createElement("div");
   c.className = "card";
   const badge = document.createElement("span");

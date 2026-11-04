@@ -23,7 +23,7 @@ in plain words, run its command, compare your output to the value.
 | E5b | Proof the attacker is capable: it *refuses* lightly-blurred PII, so it can see secrets when present | Refusal on file | Pinned reply in `runs/attack-blur2-refusal.json` |
 | E6 | One-line summary of everything above | 22 secrets, 0.909 found, 0 leaked | `npm run verify:corpus` (exits 1 — the mask gap is honest, not hidden) |
 | E7 | Same finder run 3 times: low / middle / high. Plus what fraction is found in *every* run | 0.773 / 0.864 / 0.909; every-run 0.727 | `npm run variance` |
-| E9 | Total API money spent, tracked per call | $1.03 over 97 calls | `npm run cost` |
+| E9 | Total API money spent, tracked per call | $1.17 over 98 calls (product 97, probe 1, unpriced 9) | `npm run cost` |
 | E10 | Safety gates: empty input must fail, edited answer key must refuse | Both proven by tests | `npm run verify` |
 
 ## Second test set: prettier documents (5 styled renders, 22 secrets)
